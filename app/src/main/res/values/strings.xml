@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">exercice 3</string>
+    <string name="Title">Exercice 3</string>
+    <string name="Id">Moshe Cohen 338057748
+        Fakhri Said 201264728</string>
+    <string name="facebook_app_id">516727738823471</string>
+    <string name="fb_login_protocol_scheme">fb516727738823471</string>
+    <string name="connect">Sign in</string>
+    <string name="create">Sign up</string>
+    <string name="email">Email</string>
+    <string name="passworld">Passworld</string>
+    <string name="Confirm_Passworld">Confirm Passworld</string>
+    <string name="New_User">New User</string>
+    <string name="SignOut">Sign out</string>
+    <string name="title_activity_google_auth">GoogleAuth</string>
+    <string name="reset_Passworld">Reset passworld</string>
+</resources>
