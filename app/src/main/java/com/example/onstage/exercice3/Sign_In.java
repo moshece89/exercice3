@@ -67,9 +67,9 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
         defaults.put("anonymous_login_enabled", true);
 
         anonymous.activateFetched();
-        updateButtonVisibility();
+        //updateButtonVisibility();
 
-        mAnnonymosSignin = findViewById(R.id.anonymos_button);
+        mAnnonymosSignin = findViewById(R.id.button_anonymousButton);
         // Facebook Login
         FacebookSdk.sdkInitialize(getApplicationContext());
         mCallbackManager = CallbackManager.Factory.create();
@@ -137,10 +137,10 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
     private void updateButtonVisibility() {
         boolean show = anonymous.getBoolean("anonymous_login_enabled");
         if (show) {
-            findViewById(R.id.anonymos_button).setVisibility(View.VISIBLE);
+            findViewById(R.id.button_anonymousButton).setVisibility(View.VISIBLE);
 
         } else {
-            findViewById(R.id.anonymos_button).setVisibility(View.INVISIBLE);
+            findViewById(R.id.button_anonymousButton).setVisibility(View.INVISIBLE);
         }
     }
 

@@ -46,7 +46,7 @@ public class Sign_Up extends AppCompatActivity {
     private void updateUI(FirebaseUser currentUser) {
         if (currentUser == null) {
             Toast message = new Toast(this);
-            message.makeText(this, "love you baby", Toast.LENGTH_SHORT).show();
+            message.makeText(this, "error system your autodestruction is immediate bye", Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent(getApplicationContext(), MyStorageProduct.class);
             intent.putExtra(Constants.WAY_OF_CONNECTION, Constants.Email);
