@@ -17,6 +17,23 @@ public class Cars {
 
 
     private Map<String,Car> carListToMaker = null;
+
+    public Map<String, Car> getCarListToMaker() {
+        return carListToMaker;
+    }
+
+    public void setCarListToMaker(Map<String, Car> carListToMaker) {
+        this.carListToMaker = carListToMaker;
+    }
+
+    public Map<String, Car> getCarListToModel() {
+        return carListToModel;
+    }
+
+    public void setCarListToModel(Map<String, Car> carListToModel) {
+        this.carListToModel = carListToModel;
+    }
+
     private Map<String,Car> carListToModel = null;
 
     public Cars(List<Car> carList)
@@ -67,4 +84,5 @@ public class Cars {
         }
         return sb.toString();
     }
+
 }

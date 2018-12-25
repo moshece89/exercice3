@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -23,13 +25,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Map;
 
 import model.Car;
 import model.Cars;
@@ -38,7 +37,6 @@ public class MyStorageProduct extends AppCompatActivity {
     private static final String TAG = "My storage Product";
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
-    private List<Car> taskDesList;
     private ArrayAdapter mAdapter;
 
     @Override
@@ -48,26 +46,70 @@ public class MyStorageProduct extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        final TextView textView= findViewById(R.id.textView);
+
         FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
         DatabaseReference mReference = mDatabase.getReference("cars");
-
+        final TableLayout linearLayout = findViewById(R.id.layoutOption);
 
         mReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String message="";
                 long value=dataSnapshot.getChildrenCount();
                 Log.d(TAG,"no of children: "+value);
 
-                GenericTypeIndicator<List<Car>> genericTypeIndicator =new GenericTypeIndicator<List<Car>>(){};
-                taskDesList=dataSnapshot.getValue(genericTypeIndicator);
+                Iterator<Map.Entry<String, Car>> iter;
+                TextView textView;
+                StringBuilder sb;
+                Button signout =findViewById(R.id.button_SignOut);
+                Boolean makeClicked = ((RadioButton)findViewById(R.id.radioButton_Maker)).isChecked();
 
-                for(int i=0;i<taskDesList.size();i++){
-                    message +=taskDesList.get(i).getCar_Maker() +"\n";
+
+                if(makeClicked)
+                {
+                    iter = Constants.myCars.getCarListToMaker().entrySet().iterator();
                 }
-                Cars cars = new Cars(taskDesList);
-                textView.setText(cars.printMaker());
+                else {
+                    iter = Constants.myCars.getCarListToModel().entrySet().iterator();
+                }
+
+                while (iter.hasNext()) {
+                    sb = new StringBuilder();
+                    textView = new TextView(getApplicationContext());
+                    final Map.Entry<String, Car> entry = iter.next();
+                    sb.append("maker :");
+                    sb.append(entry.getValue().getCar_Maker());
+                    sb.append("     model:");
+                    sb.append(entry.getValue().getCar_Model());
+                    sb.append("     Color: ");
+                    sb.append(entry.getValue().getColor());
+                    sb.append("     Price: ");
+                    sb.append(entry.getValue().getPrice());
+                    sb.append("     ID: ");
+                    sb.append(entry.getValue().getSku());
+                    sb.append("     Stock: ");
+                    sb.append(entry.getValue().getStock());
+                    sb.append("     Year: ");
+                    sb.append(entry.getValue().getYear());
+                    textView.setText(sb.toString());
+                    CardView cardView = new CardView(getApplicationContext());
+                    cardView.addView(textView);
+                    cardView.setClickable(true);
+                    cardView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getApplicationContext(),ProductSetting.class);
+                            intent.putExtra(Constants.MAKER, entry.getValue().getCar_Maker());
+                            startActivity(intent);
+                        }
+                    });
+
+                    linearLayout.addView(cardView);
+                    if (iter.hasNext()) {
+                        sb.append(',').append(' ');
+                    }
+                }
+                linearLayout.removeView(signout);
+                linearLayout.addView(signout);
             }
 
             @Override
@@ -115,5 +157,4 @@ public class MyStorageProduct extends AppCompatActivity {
 
         Log.e(TAG, "onGooglesignOut() <<");
     }
-
 }

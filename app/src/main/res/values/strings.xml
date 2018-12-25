@@ -15,4 +15,20 @@
     <string name="SignOut">Sign out</string>
     <string name="title_activity_google_auth">GoogleAuth</string>
     <string name="reset_Passworld">Reset passworld</string>
+    <string name="model">Model</string>
+    <string name="maker">Maker</string>
+    <string name="sorting">Sorting By</string>
+    <string name="Filter">Filter By</string>
+    <string name="Model">Model: </string>
+    <string name="Maker">Maker: </string>
+    <string name="Color">Color: </string>
+    <string name="Price">Price: </string>
+    <string name="ID">ID: </string>
+    <string name="Stock">Stock: </string>
+    <string name="Year">Year: </string>
+    <string name="Buy">Buy</string>
+    <string name="Return">Return</string>
+
+
+
 </resources>

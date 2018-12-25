@@ -78,4 +78,11 @@ public class Car {
     }
 
 
+    public void sellCar()
+    {
+        if(stock!=0)
+        {
+            stock--;
+        }
+    }
 }

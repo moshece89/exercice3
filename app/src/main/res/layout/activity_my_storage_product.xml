@@ -7,52 +7,78 @@
     android:layout_height="match_parent"
     tools:context=".MyStorageProduct">
 
-    <ScrollView android:id="@+id/scrollView1"
+    <ScrollView
+        android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:fillViewport="true" >
+        android:fillViewport="true"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
 
-
-        <TableLayout
+        <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/layoutOption"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:background="#ffffffff"
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="TextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/textView_Settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sorting"
+                tools:layout_editor_absoluteX="93dp"
+                tools:layout_editor_absoluteY="189dp" />
+
+            <RadioGroup
+                android:layout_width="127dp"
+                android:layout_height="113dp"
+                tools:layout_editor_absoluteX="53dp"
+                tools:layout_editor_absoluteY="116dp">
+
+                <RadioButton
+                    android:id="@+id/radioButton_Maker"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="@string/maker" />
+
+                <RadioButton
+                    android:id="@+id/radioButton_Model"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/model" />
+            </RadioGroup>
+            <TextView
+                android:id="@+id/textView_Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Filter"
+                tools:layout_editor_absoluteX="121dp"
+                tools:layout_editor_absoluteY="224dp" />
 
 
-
-    <Button
-        android:id="@+id/button_SignOut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="108dp"
-        android:onClick="onClickSignOut"
-        android:text="@string/SignOut"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
+            <Button
+                android:id="@+id/button_SignOut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="108dp"
+                android:onClick="onClickSignOut"
+                android:text="@string/SignOut"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
         </TableLayout>
+
     </ScrollView>
+
+
 
 
 </android.support.constraint.ConstraintLayout>
