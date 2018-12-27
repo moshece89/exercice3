@@ -124,7 +124,9 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
+                    Intent intent = new Intent(getApplicationContext(),MyStorageProduct.class);
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    startActivity(intent);
 
                 } else {
                     // User is signed out

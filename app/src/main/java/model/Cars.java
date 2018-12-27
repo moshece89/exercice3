@@ -1,9 +1,5 @@
 package model;
 
-import android.util.Log;
-
-import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -16,7 +12,7 @@ public class Cars {
 
 
 
-    private Map<String,Car> carListToMaker = null;
+    private Map<String, Car> carListToMaker = null;
 
     public Map<String, Car> getCarListToMaker() {
         return carListToMaker;
@@ -43,9 +39,8 @@ public class Cars {
 
         for(int i = 0; i < carList.size(); i++)
         {
-
-            carListToMaker.put(carList.get(i).getCar_Maker(),carList.get(i));
-            carListToModel.put(carList.get(i).getCar_Model(),carList.get(i));
+            carListToMaker.put(carList.get(i).getCar_maker()+carList.get(i).getId(),carList.get(i));
+            carListToModel.put(carList.get(i).getCar_model()+carList.get(i).getId(),carList.get(i));
         }
         carListToModel = new TreeMap<String, Car>(carListToModel);
         carListToMaker = new TreeMap<String, Car>(carListToMaker);
@@ -59,7 +54,7 @@ public class Cars {
             Map.Entry<String, Car> entry = iter.next();
             sb.append(entry.getKey());
             sb.append('=').append('"');
-            sb.append(entry.getValue().getCar_Model());
+            sb.append(entry.getValue().getCar_model());
             sb.append('"');
             if (iter.hasNext()) {
                 sb.append(',').append(' ');
@@ -76,7 +71,7 @@ public class Cars {
             Map.Entry<String, Car> entry = iter.next();
             sb.append(entry.getKey());
             sb.append(':');
-            sb.append(entry.getValue().getCar_Maker());
+            sb.append(entry.getValue().getCar_maker());
             sb.append("\n");
             if (iter.hasNext()) {
                 sb.append(',').append(' ');

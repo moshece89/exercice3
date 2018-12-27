@@ -1,40 +1,83 @@
 package model;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class Car {
-    private String car_Maker;
-    private String car_Model;
+    private String car_maker;
+
+    public String getImage_URL() {
+        return image_URL;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public FirebaseDatabase getmDatabase() {
+        return mDatabase;
+    }
+
+    private String car_model;
     private String color;
     private String price;
-    private int sku;
+
+    public void setImage_URL(String image_URL) {
+        this.image_URL = image_URL;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setmDatabase(FirebaseDatabase mDatabase) {
+        this.mDatabase = mDatabase;
+    }
+
+    private String image_URL;
+    private int row;
+    private String id;
     private int stock;
     private int year;
-    public Car(String car_Maker, String car_Model, String color, String price, int sku, int stock, int year) {
-        this.car_Maker = car_Maker;
-        this.car_Model = car_Model;
+    private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+
+    public Car(String car_Maker, String car_Model, String color, String price, String id, int stock, int year, String image_URL, int row) {
+        this.car_maker = car_Maker;
+        this.car_model = car_Model;
         this.color = color;
         this.price = price;
-        this.sku = sku;
+        this.id = id;
         this.stock = stock;
         this.year = year;
+        this.image_URL = image_URL;
+        this.row = row;
     }
 
     public Car() {
     }
 
-    public String getCar_Maker() {
-        return car_Maker;
+    public String getCar_maker() {
+        return car_maker;
     }
 
-    public void setCar_Maker(String car_Maker) {
-        this.car_Maker = car_Maker;
+    public void setCar_maker(String car_maker) {
+        this.car_maker = car_maker;
     }
 
-    public String getCar_Model() {
-        return car_Model;
+    public String getCar_model() {
+        return car_model;
     }
 
-    public void setCar_Model(String car_Model) {
-        this.car_Model = car_Model;
+    public void setCar_model(String car_model) {
+        this.car_model = car_model;
     }
 
     public String getColor() {
@@ -53,12 +96,12 @@ public class Car {
         this.price = price;
     }
 
-    public int getSku() {
-        return sku;
+    public String getSku() {
+        return id;
     }
 
-    public void setSku(int sku) {
-        this.sku = sku;
+    public void setSku(String sku) {
+        this.id = sku;
     }
 
     public int getStock() {
@@ -77,12 +120,15 @@ public class Car {
         this.year = year;
     }
 
+    public String getCarPic(){return image_URL;}
 
     public void sellCar()
     {
         if(stock!=0)
         {
-            stock--;
+          //  stock--;
+            DatabaseReference mReference = mDatabase.getReference("cars");
+            mReference.child(Integer.toString(this.row)).child("stock").setValue(--stock);
         }
     }
 }

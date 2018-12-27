@@ -46,7 +46,7 @@ public class SplashScreen extends AppCompatActivity {
         mReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                long value=dataSnapshot.getChildrenCount();
+                //long value=dataSnapshot.getChildrenCount();
         GenericTypeIndicator<List<Car>> genericTypeIndicator =new GenericTypeIndicator<List<Car>>(){};
         Constants.carList = dataSnapshot.getValue(genericTypeIndicator);
         Constants.myCars = new Cars(Constants.carList);

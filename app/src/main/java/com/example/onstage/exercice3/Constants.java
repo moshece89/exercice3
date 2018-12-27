@@ -22,6 +22,7 @@ public class Constants {
     public static final String DONT_REGISTER = "You don't register";
 
     public static final String MAKER = "Maker";
+    public static final String ID="id";
     public static List<Car> carList;
     public static List<User> userList;
     public static List<CommentUser> commentUserList;

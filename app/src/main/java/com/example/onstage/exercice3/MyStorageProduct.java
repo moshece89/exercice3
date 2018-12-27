@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -25,9 +26,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import model.Car;
@@ -58,7 +62,11 @@ public class MyStorageProduct extends AppCompatActivity {
                 Log.d(TAG,"no of children: "+value);
 
                 Iterator<Map.Entry<String, Car>> iter;
+                GenericTypeIndicator<List<Car>> genericTypeIndicator =new GenericTypeIndicator<List<Car>>(){};
+                Constants.carList = dataSnapshot.getValue(genericTypeIndicator);
+                Constants.myCars = new Cars(Constants.carList);
                 TextView textView;
+                ImageView imageview;
                 StringBuilder sb;
                 Button signout =findViewById(R.id.button_SignOut);
                 Boolean makeClicked = ((RadioButton)findViewById(R.id.radioButton_Maker)).isChecked();
@@ -71,34 +79,41 @@ public class MyStorageProduct extends AppCompatActivity {
                 else {
                     iter = Constants.myCars.getCarListToModel().entrySet().iterator();
                 }
-
+                int i=0;
                 while (iter.hasNext()) {
                     sb = new StringBuilder();
                     textView = new TextView(getApplicationContext());
+                    imageview =new ImageView(getApplicationContext());
                     final Map.Entry<String, Car> entry = iter.next();
-                    sb.append("maker :");
-                    sb.append(entry.getValue().getCar_Maker());
+                    sb.append(i+"maker :");
+                    i++;
+                    sb.append(entry.getValue().getCar_maker());
                     sb.append("     model:");
-                    sb.append(entry.getValue().getCar_Model());
+                    sb.append(entry.getValue().getCar_model());
                     sb.append("     Color: ");
                     sb.append(entry.getValue().getColor());
                     sb.append("     Price: ");
                     sb.append(entry.getValue().getPrice());
                     sb.append("     ID: ");
-                    sb.append(entry.getValue().getSku());
+                    sb.append(entry.getValue().getId());
                     sb.append("     Stock: ");
                     sb.append(entry.getValue().getStock());
                     sb.append("     Year: ");
                     sb.append(entry.getValue().getYear());
                     textView.setText(sb.toString());
+                    Picasso.get().load(entry.getValue().getImage_URL()).fit().placeholder(R.mipmap.ic_launcher).into(imageview);
+
                     CardView cardView = new CardView(getApplicationContext());
+                    imageview.setMaxWidth(50);
+                    cardView.addView(imageview);
                     cardView.addView(textView);
                     cardView.setClickable(true);
                     cardView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(getApplicationContext(),ProductSetting.class);
-                            intent.putExtra(Constants.MAKER, entry.getValue().getCar_Maker());
+                            intent.putExtra(Constants.MAKER, entry.getValue().getCar_maker());
+                            intent.putExtra(Constants.ID,entry.getValue().getId());
                             startActivity(intent);
                         }
                     });
@@ -128,7 +143,10 @@ public class MyStorageProduct extends AppCompatActivity {
 
     }
 
+    private void updateTable()
+    {
 
+    }
 
     public void onClickSignOut(View V)
     {
@@ -156,5 +174,10 @@ public class MyStorageProduct extends AppCompatActivity {
         }
 
         Log.e(TAG, "onGooglesignOut() <<");
+    }
+
+    public void onClickFilter()
+    {
+
     }
 }
