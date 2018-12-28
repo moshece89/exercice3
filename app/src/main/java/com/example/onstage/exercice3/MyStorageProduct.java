@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
@@ -30,12 +31,16 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import model.Car;
 import model.Cars;
+import model.User;
+import model.Users;
 
 public class MyStorageProduct extends AppCompatActivity {
     private static final String TAG = "My storage Product";
@@ -51,9 +56,28 @@ public class MyStorageProduct extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
 
-        FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference mReference = mDatabase.getReference("cars");
+        DatabaseToApplication.mDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference mReference = DatabaseToApplication.mDatabase.getReference("cars");
         final TableLayout linearLayout = findViewById(R.id.layoutOption);
+        DatabaseReference mReferenceUsers = DatabaseToApplication.mDatabase.getReference("users");
+
+        mReferenceUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                GenericTypeIndicator<HashMap<String,User>> genericTypeIndicator =new GenericTypeIndicator<HashMap<String, User>>(){};
+                //GenericTypeIndicator<List<User>> genericTypeIndicator =new GenericTypeIndicator<List<User>>(){};
+                //DatabaseToApplication.userslist =dataSnapshot.getValue(genericTypeIndicator);
+                DatabaseToApplication.userList = dataSnapshot.getValue(genericTypeIndicator);
+                updateIdFirebase(DatabaseToApplication.userList);
+                DatabaseToApplication.users = new Users(DatabaseToApplication.userList);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         mReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -63,24 +87,39 @@ public class MyStorageProduct extends AppCompatActivity {
 
                 Iterator<Map.Entry<String, Car>> iter;
                 GenericTypeIndicator<List<Car>> genericTypeIndicator =new GenericTypeIndicator<List<Car>>(){};
-                Constants.carList = dataSnapshot.getValue(genericTypeIndicator);
-                Constants.myCars = new Cars(Constants.carList);
+                DatabaseToApplication.carList = dataSnapshot.getValue(genericTypeIndicator);
+                DatabaseToApplication.myCars = new Cars(DatabaseToApplication.carList);
                 TextView textView;
                 ImageView imageview;
                 StringBuilder sb;
                 Button signout =findViewById(R.id.button_SignOut);
                 Boolean makeClicked = ((RadioButton)findViewById(R.id.radioButton_Maker)).isChecked();
+                TableRow tableRow ;
 
+
+                if(!DatabaseToApplication.userListAuth.containsKey(FirebaseAuth.getInstance().getUid()))
+                {
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    User user1 = new User();
+                    if (user != null) {
+                        user1.setIdAuth(user.getUid());
+                        user1.setId(DatabaseToApplication.userList.size()+1);
+                        String key = DatabaseToApplication.mDatabase.getReference("users").push().getKey();
+                        DatabaseToApplication.mDatabase.getReference("users").child(key).setValue(user1);
+                    }
+                }
 
                 if(makeClicked)
                 {
-                    iter = Constants.myCars.getCarListToMaker().entrySet().iterator();
+                    iter = DatabaseToApplication.myCars.getCarListToMaker().entrySet().iterator();
                 }
                 else {
-                    iter = Constants.myCars.getCarListToModel().entrySet().iterator();
+                    iter = DatabaseToApplication.myCars.getCarListToModel().entrySet().iterator();
                 }
                 int i=0;
                 while (iter.hasNext()) {
+                    tableRow = new TableRow(getApplicationContext());
+                    //tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
                     sb = new StringBuilder();
                     textView = new TextView(getApplicationContext());
                     imageview =new ImageView(getApplicationContext());
@@ -104,11 +143,17 @@ public class MyStorageProduct extends AppCompatActivity {
                     Picasso.get().load(entry.getValue().getImage_URL()).fit().placeholder(R.mipmap.ic_launcher).into(imageview);
 
                     CardView cardView = new CardView(getApplicationContext());
-                    imageview.setMaxWidth(50);
-                    cardView.addView(imageview);
-                    cardView.addView(textView);
-                    cardView.setClickable(true);
-                    cardView.setOnClickListener(new View.OnClickListener() {
+
+                    //imageview.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
+                    //textView.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
+
+                    //tableRow.addView(imageview);
+                    //tableRow.addView(textView);
+                    textView.setVisibility(View.VISIBLE);
+                    tableRow.addView(imageview);
+                    tableRow.addView(textView);
+                    //tableRow.setClickable(true);
+                    tableRow.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(getApplicationContext(),ProductSetting.class);
@@ -118,7 +163,7 @@ public class MyStorageProduct extends AppCompatActivity {
                         }
                     });
 
-                    linearLayout.addView(cardView);
+                    linearLayout.addView(tableRow);
                     if (iter.hasNext()) {
                         sb.append(',').append(' ');
                     }
@@ -176,8 +221,22 @@ public class MyStorageProduct extends AppCompatActivity {
         Log.e(TAG, "onGooglesignOut() <<");
     }
 
-    public void onClickFilter()
+    public void onClickFilter(View v)
     {
 
+    }
+
+    private void updateIdFirebase(HashMap<String, User> userList) {
+        Set keys = userList.keySet();
+        Iterator it = keys.iterator();
+        Object key = it;
+        DatabaseToApplication.userListAuth= new HashMap<>();
+        while (it.hasNext()){
+            key = it.next();
+            Log.d("keykey",key.toString());
+            Log.d("keykey",userList.get(key).getIdAuth());
+            DatabaseToApplication.userListAuth.put(userList.get(key).getIdAuth(),userList.get(key));
+
+        }
     }
 }

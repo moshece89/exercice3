@@ -1,6 +1,11 @@
 package model;
 
+import android.util.Log;
+
+import com.example.onstage.exercice3.DatabaseToApplication;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Car {
@@ -122,12 +127,20 @@ public class Car {
 
     public String getCarPic(){return image_URL;}
 
+    @Exclude
     public void sellCar()
     {
         if(stock!=0)
         {
           //  stock--;
             DatabaseReference mReference = mDatabase.getReference("cars");
+
+            id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            Log.d("keykey",id);
+            DatabaseToApplication.userListAuth.get(id).updateTheCarInPossession(this.id);
+            DatabaseReference mReferences =mDatabase.getReference("users");
+            mReferences.setValue(DatabaseToApplication.userList);
+
             mReference.child(Integer.toString(this.row)).child("stock").setValue(--stock);
         }
     }

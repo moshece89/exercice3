@@ -23,12 +23,17 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import model.Car;
 import model.Cars;
 import model.CommentUser;
+import model.Comments;
 import model.User;
+import model.Users;
 
 public class SplashScreen extends AppCompatActivity {
     private Handler m_Handler = new Handler();
@@ -38,23 +43,52 @@ public class SplashScreen extends AppCompatActivity {
 
         //Remove title bar
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference mReference = mDatabase.getReference("cars");
+        DatabaseToApplication.mDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference mReferenceCars = DatabaseToApplication.mDatabase.getReference("cars");
+        DatabaseReference mReferenceUsers = DatabaseToApplication.mDatabase.getReference("users");
+        DatabaseReference mReferenceComments = DatabaseToApplication.mDatabase.getReference("comments");
 
         //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        mReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        mReferenceCars.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //long value=dataSnapshot.getChildrenCount();
         GenericTypeIndicator<List<Car>> genericTypeIndicator =new GenericTypeIndicator<List<Car>>(){};
-        Constants.carList = dataSnapshot.getValue(genericTypeIndicator);
-        Constants.myCars = new Cars(Constants.carList);
-        /*GenericTypeIndicator<List<User>> genericTypeIndicatorc =new GenericTypeIndicator<List<User>>(){};
-        Constants.userList = dataSnapshot.getValue(genericTypeIndicatorc);
+        DatabaseToApplication.carList = dataSnapshot.getValue(genericTypeIndicator);
+        DatabaseToApplication.myCars = new Cars(DatabaseToApplication.carList);
+            }
 
-        GenericTypeIndicator<List<CommentUser>> genericTypeIndicators =new GenericTypeIndicator<List<CommentUser>>(){};
-        Constants.commentUserList = dataSnapshot.getValue(genericTypeIndicators);*/
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        mReferenceUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                GenericTypeIndicator<HashMap<String,User>> genericTypeIndicator =new GenericTypeIndicator<HashMap<String, User>>(){};
+                //GenericTypeIndicator<List<User>> genericTypeIndicator =new GenericTypeIndicator<List<User>>(){};
+                //DatabaseToApplication.userslist =dataSnapshot.getValue(genericTypeIndicator);
+                DatabaseToApplication.userList = dataSnapshot.getValue(genericTypeIndicator);
+                updateIdFirebase(DatabaseToApplication.userList);
+                DatabaseToApplication.users = new Users(DatabaseToApplication.userList);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+        mReferenceComments.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                GenericTypeIndicator<HashMap<String,CommentUser>> genericTypeIndicator =new GenericTypeIndicator<HashMap<String, CommentUser>>(){};
+                DatabaseToApplication.commentUserList = dataSnapshot.getValue(genericTypeIndicator);
+                //DatabaseToApplication.comments = new Comments(DatabaseToApplication.commentUserList);
 
             }
 
@@ -76,6 +110,20 @@ public class SplashScreen extends AppCompatActivity {
         }, 3000);
     }
 
+    private void updateIdFirebase(HashMap<String, User> userList) {
+        Set keys = userList.keySet();
+        Iterator it = keys.iterator();
+        Object key = it;
+        DatabaseToApplication.userListAuth= new HashMap<>();
+        while (it.hasNext()){
+            key = it.next();
+            Log.d("keykey",key.toString());
+            Log.d("keykey",userList.get(key).getIdAuth());
+            DatabaseToApplication.userListAuth.put(userList.get(key).getIdAuth(),userList.get(key));
+
+        }
+    }
+
     private void printkeyHash() {
         try {
             PackageInfo info = getPackageManager().getPackageInfo("com.example.onstage.exercice3", PackageManager.GET_SIGNATURES);
@@ -84,8 +132,6 @@ public class SplashScreen extends AppCompatActivity {
                 md.update(signature.toByteArray());
                 Log.d("Hkey", Base64.encodeToString(md.digest(), Base64.DEFAULT));
             }
-
-
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {

@@ -40,6 +40,8 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import model.User;
+
 public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private CallbackManager mCallbackManager;
@@ -82,6 +84,14 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
             public void onSuccess(LoginResult loginResult) {
                 Log.d(TAG, "facebook:onSuccess:" + loginResult);
                 firebaseAuthWithFacebook(loginResult.getAccessToken());
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                User user1 = new User();
+                if (user != null) {
+                    user1.setIdAuth(user.getUid());
+
+                    String key = DatabaseToApplication.mDatabase.getReference("users").push().getKey();
+                    DatabaseToApplication.mDatabase.getReference("users").child(key).setValue(user1);
+                }
             }
 
             @Override
@@ -163,6 +173,13 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
     public void onClickAnonymos(View V) {
         mAuth.signInAnonymously();
         FirebaseUser user = mAuth.getCurrentUser();
+        User user1 = new User();
+        if (user != null) {
+            user1.setIdAuth(user.getUid());
+            user1.setId(DatabaseToApplication.userList.size() + 1);
+            String key = DatabaseToApplication.mDatabase.getReference("users").push().getKey();
+            DatabaseToApplication.mDatabase.getReference("users").child(key).setValue(user1);
+        }
         updateUI(user, "anonymous");
     }
 

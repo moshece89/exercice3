@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".ProductSetting">
 
+
+
     <TextView
         android:id="@+id/textView_Maker"
         android:layout_width="61dp"
@@ -97,18 +99,19 @@
         android:layout_marginEnd="8dp"
         android:onClick="onClickBuy"
         android:text="@string/Buy"
-        app:layout_constraintBottom_toBottomOf="@+id/button4"
+        app:layout_constraintBottom_toBottomOf="@+id/button_Return"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.514"
-        app:layout_constraintStart_toEndOf="@+id/button4"
-        app:layout_constraintTop_toBottomOf="@+id/textView_Year" />
+        app:layout_constraintHorizontal_bias="0.586"
+        app:layout_constraintStart_toEndOf="@+id/button_Return"
+        app:layout_constraintTop_toBottomOf="@+id/textView_Year"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/button_Return"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="136dp"
-        android:layout_marginBottom="292dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginBottom="340dp"
         android:onClick="onClickReturn"
         android:text="@string/Return"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -121,7 +124,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintBottom_toTopOf="@+id/button_Return"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/textView_Year"
@@ -129,32 +132,47 @@
         app:layout_constraintVertical_bias="0.0"
         tools:srcCompat="@tools:sample/avatars[0]" />
 
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        tools:ignore="MissingConstraints"
+        tools:layout_height="300dp"
+        tools:layout_editor_absoluteX="-20dp"
+        tools:layout_editor_absoluteY="250dp">
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="388dp"
-        android:layout_height="281dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="350dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toBottomOf="@+id/button_Return">
 
         <EditText
             android:id="@+id/editTextComment"
             android:layout_width="match_parent"
             android:layout_height="94dp"
             android:ems="10"
-            android:hint="Insert comment here"
+            android:hint="@string/Insert"
             android:inputType="textPersonName" />
 
         <Button
             android:id="@+id/submitButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Submit" />
+            android:onClick="onClickSubmit"
+            android:text="@string/Submit" />
     </LinearLayout>
+    </ScrollView>
+
 
 </android.support.constraint.ConstraintLayout>

@@ -1,14 +1,23 @@
 package model;
 
 public class CommentUser {
+
+    private String idOfUser;
+    private String idOfProduct;
+    private String comment;
+
     public CommentUser() {
     }
 
-    public int getIdOfUser() {
+    public CommentUser(String idOfProduct) {
+        this.idOfProduct = idOfProduct;
+    }
+
+    public String getIdOfUser() {
         return idOfUser;
     }
 
-    public void setIdOfUser(int idOfUser) {
+    public void setIdOfUser(String idOfUser) {
         this.idOfUser = idOfUser;
     }
 
@@ -20,11 +29,22 @@ public class CommentUser {
         this.comment = comment;
     }
 
-    private int idOfUser;
-    private String comment;
 
-    public CommentUser(int idOfUser, String comment) {
+    public CommentUser(String idOfUser, String comment, String idOfProduct) {
         this.idOfUser = idOfUser;
         this.comment = comment;
+        this.idOfProduct = idOfProduct;
     }
+
+    public String getIdOfProduct() {
+        return idOfProduct;
+    }
+
+    public void setIdOfProduct(String idOfProduct) {
+        this.idOfProduct = idOfProduct;
+    }
+
+
+
+
 }

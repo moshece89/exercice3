@@ -1,25 +1,39 @@
 package model;
 
-public class User {
-        private int idAuth;
-        private int id;
-        private Cars CarsWantToBuy;
+import com.google.firebase.database.Exclude;
 
-    public User(int idAuth, int id, Cars carsWantToBuy, Cars carsInMyPossesion) {
+import java.util.ArrayList;
+import java.util.List;
+
+public class User {
+    private String idAuth;
+    private String idFirebase;
+    private int id;
+    private List<String> CarsInMyPossesion= new ArrayList<>();
+
+    public User(String idAuth, String idFirebase, int id, List<String> carsInMyPossesion) {
         this.idAuth = idAuth;
+        this.idFirebase = idFirebase;
         this.id = id;
-        CarsWantToBuy = carsWantToBuy;
         CarsInMyPossesion = carsInMyPossesion;
+    }
+
+    public String getIdFirebase() {
+        return idFirebase;
+    }
+
+    public void setIdFirebase(String idFirebase) {
+        this.idFirebase = idFirebase;
     }
 
     public User() {
     }
 
-    public int getIdAuth() {
+    public String getIdAuth() {
         return idAuth;
     }
 
-    public void setIdAuth(int idAuth) {
+    public void setIdAuth(String idAuth) {
         this.idAuth = idAuth;
     }
 
@@ -31,22 +45,25 @@ public class User {
         this.id = id;
     }
 
-    public Cars getCarsWantToBuy() {
-        return CarsWantToBuy;
-    }
-
-    public void setCarsWantToBuy(Cars carsWantToBuy) {
-        CarsWantToBuy = carsWantToBuy;
-    }
-
-    public Cars getCarsInMyPossesion() {
+    public List<String> getCarsInMyPossesion() {
         return CarsInMyPossesion;
     }
 
-    public void setCarsInMyPossesion(Cars carsInMyPossesion) {
+    public void setCarsInMyPossesion(List<String> carsInMyPossesion) {
         CarsInMyPossesion = carsInMyPossesion;
     }
 
-    private Cars CarsInMyPossesion;
+
+    @Exclude
+    public void newUser(String id)
+    {
+        this.idAuth = id;
+    }
+    @Exclude
+    public void updateTheCarInPossession(String carId)
+    {
+        CarsInMyPossesion.add(carId);
+    }
+
 
 }

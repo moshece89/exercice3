@@ -19,6 +19,8 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import model.User;
+
 public class Sign_Up extends AppCompatActivity {
     public static final String TAG = "Sign_Up";
     public String m_password;
@@ -66,6 +68,11 @@ public class Sign_Up extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = m_Auth.getCurrentUser();
+                            User user1 = new User();
+                            user1.setIdAuth(user.getUid());
+                            user1.setId(DatabaseToApplication.userList.size()+1);
+                            String key = DatabaseToApplication.mDatabase.getReference("users").push().getKey();
+                            DatabaseToApplication.mDatabase.getReference("users").child(key).setValue(user1);
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
