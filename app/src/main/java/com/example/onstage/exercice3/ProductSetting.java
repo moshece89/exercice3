@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -60,30 +61,29 @@ public class ProductSetting extends AppCompatActivity {
         final String ids =getIntent().getStringExtra(Constants.ID);
         myCar = DatabaseToApplication.myCars.getCarListToMaker().get(maker+ids);
         URL image_URL = null;
-        linearLayout = findViewById(R.id.linearLayout);
+        linearLayout = findViewById(R.id.linearLayout2_test);
         newComment = findViewById(R.id.editTextComment);
-        submit = findViewById(R.id.submitButton);
+        submit = findViewById(R.id.button_Submit);
         Button buy = findViewById(R.id.button_Buy);
         ImageView carImage;
         TextView makers, model, year, color , price, id;
 
 
+        //----------------- texview and image picture button
         final TextView stock;
-        makers =  findViewById(R.id.textView_Maker);
         model = findViewById(R.id.textView_Model);
-        year = findViewById(R.id.textView_Year);
-        color = findViewById(R.id.textView_Color);
-        price = findViewById(R.id.textView_Price);
-        stock = findViewById(R.id.textView_Stock);
-        id = findViewById(R.id.textView_ID);
-        carImage = findViewById(R.id.imageViewCarPic);
 
-        makers.setText(myCar.getCar_maker());
-        model.setText(myCar.getCar_model());
-        year.setText(Integer.toString(myCar.getYear()));
-        color.setText(myCar.getColor());
-        price.setText(myCar.getPrice());
-        stock.setText(Integer.toString(myCar.getStock()));
+        stock = findViewById(R.id.textView_Stock);
+        carImage = findViewById(R.id.imageViewCarPic);
+        StringBuilder sb1 =new StringBuilder();
+
+        sb1.append("Maker:  ").append(myCar.getCar_maker()).append("\n");
+        sb1.append("Model:  ").append(myCar.getCar_model()).append("\n");
+        sb1.append("Year:  ").append(myCar.getYear()).append("\n");
+        sb1.append("Color:  ").append(myCar.getColor()).append("\n");
+        sb1.append("Price:  ").append(myCar.getPrice()).append("\n");
+        sb1.append("Id:  ").append(myCar.getId()).append("\n");
+        model.setText(sb1);
 
         Picasso.get().load(myCar.getImage_URL()).fit().placeholder(R.mipmap.ic_launcher).into(carImage);
         if(myCar.getStock() == 0)
@@ -100,34 +100,19 @@ public class ProductSetting extends AppCompatActivity {
         Iterator it = keys.iterator();
         Object key = it;
         DatabaseToApplication.userListAuth= new HashMap<>();
-        while (it.hasNext()){
-            key = it.next();
-            Log.d("keykey",key.toString());
-            Log.d("keykey",DatabaseToApplication.commentUserList.get(key).getComment());
-            if(DatabaseToApplication.commentUserList.get(key).getIdOfProduct().compareTo(myCar.getId())==0)
-            {
-                cardView = new CardView(getApplicationContext());
-                textView =new TextView(getApplicationContext());
-                sb = new StringBuilder();
-                sb.append("user ").append(DatabaseToApplication.commentUserList.get(key).getIdOfUser());
-                sb.append(":    ").append(DatabaseToApplication.commentUserList.get(key).getComment());
-                textView.setText(sb);
-                cardView.addView(textView);
-                linearLayout.addView(cardView);
-            }
-
-        }
 
         FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
         DatabaseReference mReference = mDatabase.getReference("cars").child(Integer.toString(myCar.getRow()));
         DatabaseReference mReferenceUsers = DatabaseToApplication.mDatabase.getReference("users");
 
+
+        //----------------------- listener---------------------------
         mReferenceUsers.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 GenericTypeIndicator<HashMap<String,User>> genericTypeIndicator =new GenericTypeIndicator<HashMap<String, User>>(){};
                 DatabaseToApplication.userList = dataSnapshot.getValue(genericTypeIndicator);
-                updateIdFirebase(DatabaseToApplication.userList);
+                DatabaseToApplication.updateIdFirebase(DatabaseToApplication.userList);
                 DatabaseToApplication.users = new Users(DatabaseToApplication.userList);
 
             }
@@ -149,15 +134,14 @@ public class ProductSetting extends AppCompatActivity {
                 Object key = it;
                 while (it.hasNext()){
                     key = it.next();
-                    Log.d("keykey",key.toString());
-                    Log.d("keykey",DatabaseToApplication.commentUserList.get(key).getComment());
+                    Log.d("keykeykey",key.toString());
+                    Log.d("keykeykey",DatabaseToApplication.commentUserList.get(key).getComment());
                     if(DatabaseToApplication.commentUserList.get(key).getIdOfProduct().compareTo(myCar.getId())==0)
                     {
                         cardView = new CardView(getApplicationContext());
                         textView =new TextView(getApplicationContext());
                         sb = new StringBuilder();
-                        sb.append("user ").append(DatabaseToApplication.commentUserList.get(key).getIdOfUser());
-                        sb.append(":    ").append(DatabaseToApplication.commentUserList.get(key).getComment());
+                        sb.append("    ").append(DatabaseToApplication.commentUserList.get(key).getComment());
                         textView.setText(sb);
                         cardView.addView(textView);
                         linearLayout.addView(cardView);
@@ -179,7 +163,7 @@ public class ProductSetting extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 GenericTypeIndicator<Car> genericTypeIndicator =new GenericTypeIndicator<Car>(){};
                 myCar = dataSnapshot.getValue(genericTypeIndicator);
-                stock.setText(Integer.toString(myCar.getStock()));
+                stock.setText("Stock:   "+Integer.toString(myCar.getStock()));
 
             }
 
@@ -217,33 +201,29 @@ public class ProductSetting extends AppCompatActivity {
             return null;
         }
     }
-    private void updateIdFirebase(HashMap<String, User> userList) {
-        Set keys = userList.keySet();
-        Iterator it = keys.iterator();
-        Object key = it;
-        DatabaseToApplication.userListAuth = new HashMap<>();
-        while (it.hasNext()) {
-            key = it.next();
-            Log.d("keykey", key.toString());
-            Log.d("keykey", userList.get(key).getIdAuth());
-            DatabaseToApplication.userListAuth.put(userList.get(key).getIdAuth(), userList.get(key));
 
-        }
-    }
 
-    public void onClickSubmit(View v)
-    {
+    public void onClickSubmit(View v) {
         TextView comment = findViewById(R.id.editTextComment);
         String commentString = comment.getText().toString();
         String users = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String idOfCar = myCar.getId();
-        CommentUser commentUser = new CommentUser(users, commentString, idOfCar);
+        if ((commentString != null) || (commentString.compareTo("") != 0)) {
+            CommentUser commentUser = new CommentUser(users, commentString, idOfCar);
 
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        String key = DatabaseToApplication.mDatabase.getReference("comments").push().getKey();
-        DatabaseToApplication.commentUserList.put(key, commentUser);
-        DatabaseToApplication.mDatabase.getReference("comments").child(key).setValue(commentUser);
+            String key = DatabaseToApplication.mDatabase.getReference("comments").push().getKey();
+            DatabaseToApplication.commentUserList.put(key, commentUser);
+            DatabaseToApplication.mDatabase.getReference("comments").child(key).setValue(commentUser);
+        }
     }
+
+    public void onClickScoller(View v)
+    {
+        ScrollView scrollView = findViewById(R.id.scrollView_test);
+        scrollView.setSmoothScrollingEnabled(false);
+    }
+
 }

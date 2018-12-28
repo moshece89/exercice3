@@ -71,7 +71,7 @@ public class SplashScreen extends AppCompatActivity {
                 //GenericTypeIndicator<List<User>> genericTypeIndicator =new GenericTypeIndicator<List<User>>(){};
                 //DatabaseToApplication.userslist =dataSnapshot.getValue(genericTypeIndicator);
                 DatabaseToApplication.userList = dataSnapshot.getValue(genericTypeIndicator);
-                updateIdFirebase(DatabaseToApplication.userList);
+                DatabaseToApplication.updateIdFirebase(DatabaseToApplication.userList);
                 DatabaseToApplication.users = new Users(DatabaseToApplication.userList);
 
             }
@@ -108,20 +108,6 @@ public class SplashScreen extends AppCompatActivity {
                 startActivity(intent);
             }
         }, 3000);
-    }
-
-    private void updateIdFirebase(HashMap<String, User> userList) {
-        Set keys = userList.keySet();
-        Iterator it = keys.iterator();
-        Object key = it;
-        DatabaseToApplication.userListAuth= new HashMap<>();
-        while (it.hasNext()){
-            key = it.next();
-            Log.d("keykey",key.toString());
-            Log.d("keykey",userList.get(key).getIdAuth());
-            DatabaseToApplication.userListAuth.put(userList.get(key).getIdAuth(),userList.get(key));
-
-        }
     }
 
     private void printkeyHash() {

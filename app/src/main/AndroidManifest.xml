@@ -39,7 +39,8 @@
         <activity android:name=".Sign_In" />
         <activity android:name=".Sign_Up" />
         <activity android:name=".MyStorageProduct" />
-        <activity android:name=".ProductSetting"></activity>
+        <activity android:name=".ProductSetting" />
+        <activity android:name=".Filter"></activity>
     </application>
 
 </manifest>

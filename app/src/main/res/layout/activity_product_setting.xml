@@ -8,171 +8,137 @@
 
 
 
-    <TextView
-        android:id="@+id/textView_Maker"
-        android:layout_width="61dp"
-        android:layout_height="18dp"
+        <RelativeLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="365dp"
+            android:layout_height="332dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteY="29dp">
+
+            <TextView
+                android:id="@+id/textView_Model"
+                android:layout_width="181dp"
+                android:layout_height="131dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="18dp"
+                android:layout_marginBottom="201dp"
+                android:text="gggg" />
+
+            <TextView
+                android:id="@+id/textView_Stock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/textView_Model"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="17dp"
+                android:layout_marginBottom="164dp"
+                android:text="dsaads" />
+
+            <ImageView
+                android:id="@+id/imageViewCarPic"
+                android:layout_width="149dp"
+                android:layout_height="171dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="202dp"
+                tools:srcCompat="@tools:sample/avatars[0]" />
+
+            <Button
+                android:id="@+id/button_Buy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="19dp"
+                android:layout_marginBottom="99dp"
+                android:onClick="onClickBuy"
+                android:text="@string/Buy" />
+
+            <Button
+                android:id="@+id/button_Return"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/button_Buy"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="44dp"
+                android:onClick="onClickReturn"
+                android:text="@string/Return" />
+
+
+            <EditText
+                android:id="@+id/editTextComment"
+                android:layout_width="178dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="19dp"
+                android:layout_marginBottom="26dp"
+                android:ems="10"
+                android:hint="@string/Insert"
+                android:inputType="textPersonName"
+                android:text="" />
+
+            <Button
+                android:id="@+id/button_Submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="-103dp"
+                android:layout_marginBottom="28dp"
+                android:layout_toStartOf="@+id/button_Return"
+                android:onClick="onClickSubmit"
+                android:text="@string/Submit" />
+
+
+
+        </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView_test"
+        android:layout_width="0dp"
+        android:layout_height="520dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/Maker"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:clipToPadding="true"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView_Model"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/Model"
-        app:layout_constraintEnd_toEndOf="@+id/textView_Maker"
-        app:layout_constraintHorizontal_bias="0.024"
-        app:layout_constraintStart_toStartOf="@+id/textView_Maker"
-        app:layout_constraintTop_toBottomOf="@+id/textView_Maker" />
-
-    <TextView
-        android:id="@+id/textView_Color"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/Color"
-        app:layout_constraintEnd_toEndOf="@+id/textView_Model"
-        app:layout_constraintHorizontal_bias="0.024"
-        app:layout_constraintStart_toStartOf="@+id/textView_Model"
-        app:layout_constraintTop_toBottomOf="@+id/textView_Model" />
-
-    <TextView
-        android:id="@+id/textView_Price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/Price"
-        app:layout_constraintEnd_toEndOf="@+id/textView_Color"
-        app:layout_constraintHorizontal_bias="0.03"
-        app:layout_constraintStart_toStartOf="@+id/textView_Color"
-        app:layout_constraintTop_toBottomOf="@+id/textView_Color" />
-
-    <TextView
-        android:id="@+id/textView_ID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/ID"
-        app:layout_constraintEnd_toEndOf="@+id/textView_Price"
-        app:layout_constraintHorizontal_bias="0.056"
-        app:layout_constraintStart_toStartOf="@+id/textView_Price"
-        app:layout_constraintTop_toBottomOf="@+id/textView_Price" />
-
-    <TextView
-        android:id="@+id/textView_Stock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/Stock"
-        app:layout_constraintEnd_toEndOf="@+id/textView_ID"
-        app:layout_constraintHorizontal_bias="0.03"
-        app:layout_constraintStart_toStartOf="@+id/textView_ID"
-        app:layout_constraintTop_toBottomOf="@+id/textView_ID" />
-
-    <TextView
-        android:id="@+id/textView_Year"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/Year"
-        app:layout_constraintEnd_toEndOf="@+id/textView_Stock"
-        app:layout_constraintHorizontal_bias="0.053"
-        app:layout_constraintStart_toStartOf="@+id/textView_Stock"
-        app:layout_constraintTop_toBottomOf="@+id/textView_Stock" />
-
-    <Button
-        android:id="@+id/button_Buy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:onClick="onClickBuy"
-        android:text="@string/Buy"
-        app:layout_constraintBottom_toBottomOf="@+id/button_Return"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.586"
-        app:layout_constraintStart_toEndOf="@+id/button_Return"
-        app:layout_constraintTop_toBottomOf="@+id/textView_Year"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <Button
-        android:id="@+id/button_Return"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="88dp"
-        android:layout_marginBottom="340dp"
-        android:onClick="onClickReturn"
-        android:text="@string/Return"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageViewCarPic"
-        android:layout_width="163dp"
-        android:layout_height="154dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_Return"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/textView_Year"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
         app:layout_constraintVertical_bias="0.0"
-        tools:srcCompat="@tools:sample/avatars[0]" />
+        tools:layout_height="200dp">
 
-    <ScrollView
-        android:id="@+id/scrollView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:fillViewport="true"
-        tools:ignore="MissingConstraints"
-        tools:layout_height="300dp"
-        tools:layout_editor_absoluteX="-20dp"
-        tools:layout_editor_absoluteY="250dp">
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="350dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_Return">
-
-        <EditText
-            android:id="@+id/editTextComment"
-            android:layout_width="match_parent"
-            android:layout_height="94dp"
-            android:ems="10"
-            android:hint="@string/Insert"
-            android:inputType="textPersonName" />
-
-        <Button
-            android:id="@+id/submitButton"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/linearLayout2_test"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:onClick="onClickSubmit"
-            android:text="@string/Submit" />
-    </LinearLayout>
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.47"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_Return">
+
+
+        </LinearLayout>
     </ScrollView>
+
 
 
 </android.support.constraint.ConstraintLayout>
