@@ -31,5 +31,6 @@
     <string name="Submit">Submit</string>
     <string name="Insert">Insert comment here</string>
     <string name="To">to</string>
+    <string name="You_Are_anonymous_Toast_Message">You need to sign in before you can purchase this item, you will now be transferred to the log in page</string>
 
 </resources>

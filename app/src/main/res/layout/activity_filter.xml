@@ -10,7 +10,7 @@
         android:id="@+id/textView_Settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="40dp"
         android:text="@string/sorting"
         android:textSize="30sp"
@@ -21,11 +21,12 @@
         android:id="@+id/textView_Filter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
         android:layout_marginTop="36dp"
         android:text="@string/Filter"
         android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textView_Settings"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView_Settings"
         app:layout_constraintTop_toBottomOf="@+id/textView_Settings" />
 
     <Button
@@ -46,22 +47,22 @@
         android:id="@+id/textView_Year"
         android:layout_width="100dp"
         android:layout_height="38dp"
-        android:layout_marginStart="52dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:text="@string/Year"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView_Filter"
         app:layout_constraintTop_toBottomOf="@+id/textView_Filter" />
 
     <TextView
         android:id="@+id/textView_to1"
         android:layout_width="40dp"
         android:layout_height="31dp"
-        android:layout_marginStart="76dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="@string/To"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView_Year"
         app:layout_constraintTop_toBottomOf="@+id/textView_Year"
         tools:ignore="MissingConstraints" />
 
@@ -69,22 +70,21 @@
         android:id="@+id/textView_price"
         android:layout_width="102dp"
         android:layout_height="44dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="100dp"
         android:text="price"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView_to1"
         app:layout_constraintTop_toBottomOf="@+id/editText_minYear" />
 
     <TextView
         android:id="@+id/textView_to2"
         android:layout_width="33dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="36dp"
         android:text="@string/To"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView_price"
         app:layout_constraintTop_toBottomOf="@+id/textView_price" />
 
     <EditText
@@ -106,13 +106,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="132dp"
         android:ems="10"
         android:inputType="number"
         android:text="3000"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/editText_minYear"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/textView_to1"
+        app:layout_constraintStart_toStartOf="@+id/editText_minYear"
         app:layout_constraintTop_toBottomOf="@+id/editText_minYear" />
 
     <EditText
@@ -126,7 +125,8 @@
         android:inputType="number"
         android:text="0"
         app:layout_constraintBottom_toTopOf="@+id/button_Filter"
-        app:layout_constraintStart_toEndOf="@+id/textView_price"
+        app:layout_constraintEnd_toEndOf="@+id/editText_MaxYear"
+        app:layout_constraintStart_toStartOf="@+id/editText_MaxYear"
         app:layout_constraintTop_toBottomOf="@+id/editText_minYear"
         app:layout_constraintVertical_bias="0.339"
         tools:ignore="MissingConstraints" />
@@ -135,42 +135,42 @@
         android:id="@+id/editText_MaxPrice"
         android:layout_width="112dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="152dp"
-        android:layout_marginBottom="8dp"
         android:ems="10"
         android:inputType="number"
         android:text="100000000"
-        app:layout_constraintBottom_toTopOf="@+id/button_Filter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView_to2"
-        app:layout_constraintTop_toBottomOf="@+id/editText_minYear"
-        app:layout_constraintVertical_bias="0.685" />
+        app:layout_constraintEnd_toEndOf="@+id/editText_minPrice"
+        app:layout_constraintHorizontal_bias="0.204"
+        app:layout_constraintStart_toStartOf="@+id/editText_minPrice"
+        app:layout_constraintTop_toBottomOf="@+id/editText_minPrice" />
 
     <RadioGroup
+        android:id="@+id/radioGroup"
         android:layout_width="85dp"
         android:layout_height="44dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="44dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.447"
         app:layout_constraintStart_toEndOf="@+id/textView_Settings"
-        app:layout_constraintTop_toTopOf="parent" >
-    <RadioButton
-        android:id="@+id/radioButton_Maker"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:checked="true"
-        android:text="@string/maker" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <RadioButton
-        android:id="@+id/radioButton_Model"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/model" />
+        <RadioButton
+            android:id="@+id/radioButton_Maker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="@string/maker" />
+
+        <RadioButton
+            android:id="@+id/radioButton_Model"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/model" />
     </RadioGroup>
 
 </android.support.constraint.ConstraintLayout>

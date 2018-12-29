@@ -2,6 +2,7 @@ package com.example.onstage.exercice3;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -55,7 +56,8 @@ public class MyStorageProduct extends AppCompatActivity {
 
         DatabaseToApplication.mDatabase = FirebaseDatabase.getInstance();
         DatabaseReference mReference = DatabaseToApplication.mDatabase.getReference("cars");
-        final TableLayout linearLayout = findViewById(R.id.layoutOption);
+        final TableLayout linearLayout = findViewById(R.id.layoutOptions);
+        final ConstraintLayout daddy = findViewById(R.id.layoutOption);
         DatabaseReference mReferenceUsers = DatabaseToApplication.mDatabase.getReference("users");
 
         mReferenceUsers.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -108,9 +110,10 @@ public class MyStorageProduct extends AppCompatActivity {
                 } else {
                     iter = DatabaseToApplication.myCars.getCarListToModel().entrySet().iterator();
                 }
-                Button filter =findViewById(R.id.button3);
+               /* Button filter =findViewById(R.id.button3);
+                daddy.removeView(filter);
                 linearLayout.removeView(filter);
-                linearLayout.addView(filter);
+                linearLayout.addView(filter);*/
                 while (iter.hasNext()) {
 
                     final Map.Entry<String, Car> entry = iter.next();
@@ -155,8 +158,8 @@ public class MyStorageProduct extends AppCompatActivity {
                                 sb.append(',').append(' ');
                             }
                         }
-                        linearLayout.removeView(signout);
-                        linearLayout.addView(signout);
+                     /*   linearLayout.removeView(signout);
+                        linearLayout.addView(signout);*/
                     }
                 }
             }

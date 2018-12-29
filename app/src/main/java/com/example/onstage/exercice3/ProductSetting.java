@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -52,10 +53,13 @@ public class ProductSetting extends AppCompatActivity {
     private TextView newComment ;
     private Button submit ;
     private StringBuilder sb;
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_setting);
+        mAuth = FirebaseAuth.getInstance();
 
         final String maker = getIntent().getStringExtra(Constants.MAKER);
         final String ids =getIntent().getStringExtra(Constants.ID);
@@ -177,15 +181,25 @@ public class ProductSetting extends AppCompatActivity {
 
     public void onClickBuy(View v)
     {
+        if(mAuth.getCurrentUser().isAnonymous())
+        {
+            Intent intent = new Intent(getApplicationContext(), Sign_In.class);
+            Toast.makeText(this , R.string.You_Are_anonymous_Toast_Message,
+                    Toast.LENGTH_LONG).show();
+            intent.putExtra("userSettings", "anonymos");
+            startActivity(intent);
+        }
+        else{
         myCar.sellCar();
         //add to paner or history
         returnToStorage();
+        }
 
     }
-    public void onClickReturn(View v)
+    /*public void onClickReturn(View v)
     {
         returnToStorage();
-    }
+    }*/
     public void returnToStorage()
     {
         Intent intent = new Intent(getApplicationContext(), MyStorageProduct.class);

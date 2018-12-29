@@ -15,6 +15,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
@@ -53,6 +54,7 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
     public static final String TAG = "Sign_InComment";
     public String m_password;
     public String m_email;
+    private boolean anonymosSignIn = false;
     private SignInButton mGoogleSignInButton;
     private FirebaseRemoteConfig anonymous = FirebaseRemoteConfig.getInstance();
     private Button mAnnonymosSignin;
@@ -132,13 +134,18 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
+                Bundle extras = getIntent().getExtras();
+
+                if (user != null && extras.getString("userSettings") != "anonymos") {
                     // User is signed in
+
                     Intent intent = new Intent(getApplicationContext(),MyStorageProduct.class);
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     startActivity(intent);
 
-                } else {
+                }
+                else
+                    {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
@@ -175,6 +182,7 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
         FirebaseUser user = mAuth.getCurrentUser();
         User user1 = new User();
         if (user != null) {
+            anonymosSignIn = true;
             user1.setIdAuth(user.getUid());
             user1.setId(DatabaseToApplication.userList.size() + 1);
             String key = DatabaseToApplication.mDatabase.getReference("users").push().getKey();
