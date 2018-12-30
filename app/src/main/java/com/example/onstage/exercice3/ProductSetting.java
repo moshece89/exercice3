@@ -191,15 +191,14 @@ public class ProductSetting extends AppCompatActivity {
         }
         else{
         myCar.sellCar();
-        //add to paner or history
         returnToStorage();
         }
 
     }
-    /*public void onClickReturn(View v)
+    public void onClickReturn(View v)
     {
         returnToStorage();
-    }*/
+    }
     public void returnToStorage()
     {
         Intent intent = new Intent(getApplicationContext(), MyStorageProduct.class);
@@ -222,22 +221,26 @@ public class ProductSetting extends AppCompatActivity {
         String commentString = comment.getText().toString();
         String users = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String idOfCar = myCar.getId();
-        if ((commentString != null) || (commentString.compareTo("") != 0)) {
+        if ((commentString != null) || (commentString.compareTo("") != 0) || (commentString.compareTo(" ") != 0)) {
             CommentUser commentUser = new CommentUser(users, commentString, idOfCar);
 
-
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
             String key = DatabaseToApplication.mDatabase.getReference("comments").push().getKey();
             DatabaseToApplication.commentUserList.put(key, commentUser);
             DatabaseToApplication.mDatabase.getReference("comments").child(key).setValue(commentUser);
+
+            Toast toast = new Toast(getApplicationContext());
+            toast.makeText(ProductSetting.this, Constants.SUBMIT_MESSAGE, Toast.LENGTH_SHORT).show();
+
+            cardView = new CardView(getApplicationContext());
+            textView =new TextView(getApplicationContext());
+            sb = new StringBuilder();
+            sb.append("    ").append(DatabaseToApplication.commentUserList.get(key).getComment());
+            textView.setText(sb);
+            cardView.addView(textView);
+            linearLayout.addView(cardView);
         }
     }
 
-    public void onClickScoller(View v)
-    {
-        ScrollView scrollView = findViewById(R.id.scrollView_test);
-        scrollView.setSmoothScrollingEnabled(false);
-    }
 
 }

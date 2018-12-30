@@ -153,16 +153,6 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
         };
     }
 
-    private void updateButtonVisibility() {
-        boolean show = anonymous.getBoolean("anonymous_login_enabled");
-        if (show) {
-            findViewById(R.id.button_anonymousButton).setVisibility(View.VISIBLE);
-
-        } else {
-            findViewById(R.id.button_anonymousButton).setVisibility(View.INVISIBLE);
-        }
-    }
-
     @Override
     public void onStart() {
         super.onStart();
@@ -341,7 +331,6 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
                             updateUI(user, Constants.Email);
                         }
 
-                        // ...
                     }
                 });
 
@@ -366,7 +355,7 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
 
     }
 
-    public boolean verifyEmail(String mail) {
+    public static boolean verifyEmail(String mail) {
 
         Log.e(TAG, "verify m_email >>");
 
@@ -400,8 +389,8 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
         Log.d(TAG, "update UI >>>");
 
         if (currentUser == null) {
-            //Toast message = new Toast(this);
-            //message.makeText(this, "you don't exist", Toast.LENGTH_SHORT).show();
+            Toast message = new Toast(this);
+            message.makeText(this, "you don't exist", Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent(getApplicationContext(), MyStorageProduct.class);
             if (wayOfConnection != null) {

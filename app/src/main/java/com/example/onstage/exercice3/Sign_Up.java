@@ -93,7 +93,7 @@ public class Sign_Up extends AppCompatActivity {
 
         Toast message = new Toast(this);
 
-        if (verifyEmail(m_email))
+        if (Sign_In.verifyEmail(m_email))
         {
             if (verifyPassword())
             {
@@ -143,20 +143,5 @@ public class Sign_Up extends AppCompatActivity {
         return identical;
     }
 
-    public boolean verifyEmail(String mail) {
-        Log.e(TAG, "verify m_email >>");
 
-        Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile(
-                "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
-                        "\\@" +
-                        "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
-                        "(" +
-                        "\\." +
-                        "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
-                        ")+"
-        );
-        Log.e(TAG, "verify m_email <<");
-
-        return EMAIL_ADDRESS_PATTERN.matcher(mail).matches();
-    }
 }

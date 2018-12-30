@@ -20,7 +20,7 @@ public class Constants {
     public static final String AUTHENTICATION_SIGN_IN_FAILED_MESSAGE ="Authentication failed, please make sure that you are signed in and that you are inserting the correct m_email and m_password.";
     public static final String SEND_EMAIL_RESET = "We send you email for reset your password";
     public static final String DONT_REGISTER = "You don't register";
-
+    public static final String SUBMIT_MESSAGE = "Your comment as posted";
     public static final String MAKER = "Maker";
     public static final String ID="id";
 
