@@ -86,7 +86,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="ZipCode"
+        android:hint="ZipCode (6 to 10 digits)"
         android:inputType="numberDecimal"
         app:layout_constraintStart_toStartOf="@+id/zipCodeTag"
         app:layout_constraintTop_toBottomOf="@+id/zipCodeTag" />

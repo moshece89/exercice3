@@ -72,7 +72,7 @@ public class address extends AppCompatActivity {
                             if (current.getText().toString().length() >= 1)
                             {
                                 current = findViewById(R.id.zipCodeBox);
-                                if (current.getText().toString().length() >= 1)
+                                if (current.getText().toString().length() >= 6 && current.getText().toString().length() <= 10)
                                 {
                                     isLegal = true;
                                 }
