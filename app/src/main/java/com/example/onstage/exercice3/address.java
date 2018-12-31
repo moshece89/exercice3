@@ -15,7 +15,7 @@ public class address extends AppCompatActivity {
     private Car myCar;
     private Handler m_Handler = new Handler();
 
-    //------------------------ we are not conducting any data verification checks since this is not part of the exercise, this is only added as a demostration of user experience ---------------
+    //------------------------ we are not conducting any data verification checks since this is not part of the exercise, this is only added as a demonstration of user experience ---------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

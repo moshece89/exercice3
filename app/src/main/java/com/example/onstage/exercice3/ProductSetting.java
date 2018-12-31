@@ -167,7 +167,7 @@ public class ProductSetting extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 GenericTypeIndicator<Car> genericTypeIndicator =new GenericTypeIndicator<Car>(){};
                 myCar = dataSnapshot.getValue(genericTypeIndicator);
-                stock.setText("Stock:   "+Integer.toString(myCar.getStock()));
+                stock.setText("Stock:"+Integer.toString(myCar.getStock()));
 
             }
 
@@ -190,7 +190,8 @@ public class ProductSetting extends AppCompatActivity {
             startActivity(intent);
         }
         else{
-            if(Integer.parseInt(findViewById(R.id.textView_Stock).toString()) == 0)
+            String[] stock = ((TextView)findViewById(R.id.textView_Stock)).getText().toString().split(":");
+            if(Integer.parseInt(stock[1]) == 0)
             {
                 Toast toast = new Toast(getApplicationContext());
                 toast.makeText(ProductSetting.this, "this item is out of stock, you will be able to purchase it once we restock,", Toast.LENGTH_SHORT).show();
