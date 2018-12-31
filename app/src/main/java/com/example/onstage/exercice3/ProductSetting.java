@@ -62,7 +62,7 @@ public class ProductSetting extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         final String maker = getIntent().getStringExtra(Constants.MAKER);
-        final String ids =getIntent().getStringExtra(Constants.ID);
+        final String ids = getIntent().getStringExtra(Constants.ID);
         myCar = DatabaseToApplication.myCars.getCarListToMaker().get(maker+ids);
         URL image_URL = null;
         linearLayout = findViewById(R.id.linearLayout2_test);
@@ -190,8 +190,17 @@ public class ProductSetting extends AppCompatActivity {
             startActivity(intent);
         }
         else{
-        myCar.sellCar();
-        returnToStorage();
+            if(Integer.parseInt(findViewById(R.id.textView_Stock).toString()) == 0)
+            {
+                Toast toast = new Toast(getApplicationContext());
+                toast.makeText(ProductSetting.this, "this item is out of stock, you will be able to purchase it once we restock,", Toast.LENGTH_SHORT).show();
+            }
+            else{
+      Intent intent = new Intent (getApplicationContext(), address.class);
+      intent.putExtra(Constants.MAKER, getIntent().getStringExtra(Constants.MAKER));
+      intent.putExtra(Constants.ID, getIntent().getStringExtra(Constants.ID));
+
+      startActivity(intent);}
         }
 
     }
@@ -199,7 +208,7 @@ public class ProductSetting extends AppCompatActivity {
     {
         returnToStorage();
     }
-    public void returnToStorage()
+    public  void returnToStorage()
     {
         Intent intent = new Intent(getApplicationContext(), MyStorageProduct.class);
         startActivity(intent);

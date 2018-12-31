@@ -1,5 +1,7 @@
 package com.example.onstage.exercice3;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -134,14 +136,14 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                Bundle extras = getIntent().getExtras();
 
-                if (user != null && extras.getString("userSettings") != "anonymos") {
+                if (user != null ) {
                     // User is signed in
-
-                    Intent intent = new Intent(getApplicationContext(),MyStorageProduct.class);
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    startActivity(intent);
+                    if(!(user.isAnonymous())) {
+                        Intent intent = new Intent(getApplicationContext(), MyStorageProduct.class);
+                        Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                        startActivity(intent);
+                    }
 
                 }
                 else
@@ -402,4 +404,40 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
         Log.d(TAG, "update UI >>>");
 
     }
-}
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Quit");
+        builder.setMessage("Do you want to exit the app?");
+
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                finishProgram();
+            }
+        });
+
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+
+    private void finishProgram()
+    {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+    }
+

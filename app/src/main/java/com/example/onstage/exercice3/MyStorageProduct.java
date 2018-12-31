@@ -1,8 +1,9 @@
 package com.example.onstage.exercice3;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -10,9 +11,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -49,6 +50,7 @@ public class MyStorageProduct extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private Iterator<Map.Entry<String, Car>> iter;
     private String searchString = null;
+    private Boolean firstRun = true;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -56,10 +58,9 @@ public class MyStorageProduct extends AppCompatActivity {
         setContentView(R.layout.activity_my_storage_product);
         mAuth = FirebaseAuth.getInstance();
 
-
         DatabaseToApplication.mDatabase = FirebaseDatabase.getInstance();
         DatabaseReference mReferenceCars = DatabaseToApplication.mDatabase.getReference("cars");
-        final TableLayout linearLayout = findViewById(R.id.layoutOptions);
+    //    final TableLayout linearLayout = findViewById(R.id.layoutOptions);
         //final ConstraintLayout daddy = findViewById(R.id.layoutOption);
         DatabaseReference mReferenceUsers = DatabaseToApplication.mDatabase.getReference("users");
 
@@ -110,7 +111,7 @@ public class MyStorageProduct extends AppCompatActivity {
                     }
                 }
 
-                setLinearLayout();
+                setTableLayout();
                 /*if (DatabaseToApplication.modelClicked) {
                     iter = DatabaseToApplication.myCars.getCarListToModel().entrySet().iterator();
                 } else {
@@ -164,6 +165,7 @@ public class MyStorageProduct extends AppCompatActivity {
                 }*/
             }
 
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -179,6 +181,12 @@ public class MyStorageProduct extends AppCompatActivity {
 
 
 
+    }
+    public void onSortButtonClick(View view) {
+        // Is the button now checked?
+        DatabaseToApplication.modelClicked = ((RadioButton)findViewById(R.id.radioButton_Model)).isChecked();
+
+        setTableLayout();
     }
     private TextWatcher mtextWatcher = new TextWatcher() {
 
@@ -198,18 +206,26 @@ public class MyStorageProduct extends AppCompatActivity {
             }
             else {
                 searchString = s.toString().toLowerCase();
-                setLinearLayout();
+                setTableLayout();
             }
         }
     };
+    //------------ the are you sure dialog is only set to appear on the back button clicked since when clicking on log out we are assuming
+    // that you are well aware that you are about to do so--------------------
     public void onClickSignOut(View V)
     {
+        signOut();
+    }
+
+    private void signOut() {
+
         Log.e(TAG, "signOut() >>");
 
         googlesignOut();
         mAuth.signOut();
         LoginManager.getInstance().logOut();
         Intent intent = new Intent(getApplicationContext(), Sign_In.class);
+        this.finish();
         startActivity(intent);
         Log.e(TAG, "signOut() <<");
     }
@@ -237,20 +253,21 @@ public class MyStorageProduct extends AppCompatActivity {
     }
 
 
-    private void setLinearLayout()
+    private void setTableLayout()
     {
-        TableLayout linearLayout = findViewById(R.id.layoutOptions);
+        TableLayout tableLayout = findViewById(R.id.layoutOptions);
         TextView textView;
         ImageView imageview;
         StringBuilder sb;
         TableRow tableRow;
+        firstRun = false;
 
         if (DatabaseToApplication.modelClicked) {
             iter = DatabaseToApplication.myCars.getCarListToModel().entrySet().iterator();
         } else {
             iter = DatabaseToApplication.myCars.getCarListToMaker().entrySet().iterator();
         }
-        linearLayout.removeAllViews();
+        tableLayout.removeAllViews();
         while (iter.hasNext()) {
 
             final Map.Entry<String, Car> entry = iter.next();
@@ -294,7 +311,7 @@ public class MyStorageProduct extends AppCompatActivity {
                                 }
                             });
 
-                            linearLayout.addView(tableRow);
+                            tableLayout.addView(tableRow);
                             if (iter.hasNext()) {
                                 sb.append(',').append(' ');
                             }
@@ -331,7 +348,7 @@ public class MyStorageProduct extends AppCompatActivity {
                             }
                         });
 
-                        linearLayout.addView(tableRow);
+                        tableLayout.addView(tableRow);
                         if (iter.hasNext()) {
                             sb.append(',').append(' ');
                         }
@@ -339,5 +356,33 @@ public class MyStorageProduct extends AppCompatActivity {
                 }
             }
         }
+    }
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Log out?");
+        builder.setMessage("Are you sure you want to log out?");
+
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                signOut();
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
     }
 }

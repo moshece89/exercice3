@@ -9,12 +9,12 @@
     <string name="connect">Sign in</string>
     <string name="create">Sign up</string>
     <string name="email">Email</string>
-    <string name="passworld">Passworld</string>
-    <string name="Confirm_Passworld">Confirm Passworld</string>
+    <string name="passworld">Password</string>
+    <string name="Confirm_Passworld">Confirm Password</string>
     <string name="New_User">New User</string>
     <string name="SignOut">Sign out</string>
     <string name="title_activity_google_auth">GoogleAuth</string>
-    <string name="reset_Passworld">Reset passworld</string>
+    <string name="reset_Passworld">Reset password</string>
     <string name="model">Model</string>
     <string name="maker">Maker</string>
     <string name="sorting">Sorting By</string>

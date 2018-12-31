@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".address">
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="0px"
+        android:layout_height="0px"/>
+    <TextView
+        android:id="@+id/countryTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:text="Country"
+        app:layout_constraintStart_toStartOf="@+id/nameBox"
+        app:layout_constraintTop_toBottomOf="@+id/nameBox" />
+
+    <EditText
+        android:id="@+id/counrtyBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Country"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/countryTag"
+        app:layout_constraintTop_toBottomOf="@+id/countryTag" />
+
+    <TextView
+        android:id="@+id/cityTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="CIty"
+        app:layout_constraintStart_toStartOf="@+id/counrtyBox"
+        app:layout_constraintTop_toBottomOf="@+id/counrtyBox" />
+
+    <EditText
+        android:id="@+id/cityBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="City"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/cityTag"
+        app:layout_constraintTop_toBottomOf="@+id/cityTag" />
+
+    <TextView
+        android:id="@+id/streenNameTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Street name"
+        app:layout_constraintStart_toStartOf="@+id/cityBox"
+        app:layout_constraintTop_toBottomOf="@+id/cityBox" />
+
+    <EditText
+        android:id="@+id/streenNameBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Street"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/streenNameTag"
+        app:layout_constraintTop_toBottomOf="@+id/streenNameTag" />
+
+    <TextView
+        android:id="@+id/zipCodeTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Zip code"
+        app:layout_constraintStart_toStartOf="@+id/streenNameBox"
+        app:layout_constraintTop_toBottomOf="@+id/streenNameBox" />
+
+    <EditText
+        android:id="@+id/zipCodeBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="ZipCode"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toStartOf="@+id/zipCodeTag"
+        app:layout_constraintTop_toBottomOf="@+id/zipCodeTag" />
+
+    <Button
+        android:id="@+id/buttonSubmitShipping"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="OnClickSubmit"
+        android:text="Submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/zipCodeBox" />
+
+    <TextView
+        android:id="@+id/TitleSipping"
+        android:layout_width="225dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Shippping Details"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/name_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Name"
+        app:layout_constraintStart_toStartOf="@+id/TitleSipping"
+        app:layout_constraintTop_toBottomOf="@+id/TitleSipping" />
+
+    <TextView
+        android:id="@+id/last_name_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="124dp"
+        android:text="Last name"
+        app:layout_constraintStart_toEndOf="@+id/name_tag"
+        app:layout_constraintTop_toTopOf="@+id/name_tag" />
+
+    <EditText
+        android:id="@+id/nameBox"
+        android:layout_width="149dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Name"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/name_tag"
+        app:layout_constraintTop_toBottomOf="@+id/name_tag" />
+
+    <EditText
+        android:id="@+id/lastNameBox"
+        android:layout_width="146dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Last name"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/last_name_tag"
+        app:layout_constraintTop_toBottomOf="@+id/last_name_tag" />
+
+    <TextView
+        android:id="@+id/streetNumberTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:text="Number"
+        app:layout_constraintStart_toEndOf="@+id/streenNameBox"
+        app:layout_constraintTop_toBottomOf="@+id/cityBox" />
+
+    <EditText
+        android:id="@+id/streetNumberBox"
+        android:layout_width="73dp"
+        android:layout_height="49dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/streenNameBox"
+        app:layout_constraintStart_toStartOf="@+id/streetNumberTag" />
+</android.support.constraint.ConstraintLayout>

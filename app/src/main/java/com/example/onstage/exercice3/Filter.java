@@ -26,10 +26,8 @@ public class Filter extends AppCompatActivity {
         DatabaseToApplication.maxPrice = Integer.parseInt(maxPrice.getText().toString());
         DatabaseToApplication.minYear = Integer.parseInt(minYear.getText().toString());
         DatabaseToApplication.maxYear = Integer.parseInt(maxYear.getText().toString());
-        DatabaseToApplication.modelClicked = ((RadioButton)findViewById(R.id.radioButton_Model)).isChecked();
+       // DatabaseToApplication.modelClicked = ((RadioButton)findViewById(R.id.radioButton_Model)).isChecked();
         Intent intent =new Intent(getApplicationContext(), MyStorageProduct.class);
         startActivity(intent);
-
-
     }
 }

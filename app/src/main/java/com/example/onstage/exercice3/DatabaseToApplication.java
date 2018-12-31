@@ -30,7 +30,7 @@ public class DatabaseToApplication {
     public static int maxYear = 3000;
     public static int minPrice = 0;
     public static int maxPrice = 50000000;
-    public static boolean modelClicked;
+    public static boolean modelClicked = false;
 
     public static void updateIdFirebase(HashMap<String, User> userList) {
         Set keys = userList.keySet();
