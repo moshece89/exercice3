@@ -33,5 +33,6 @@
     <string name="To">to</string>
     <string name="You_Are_anonymous_Toast_Message">You need to sign in before you can purchase this item, you will now be transferred to the log in page</string>
     <string name="Search">Search maker, model or color</string>
+    <string name="Demo">Demo</string>
 
 </resources>

@@ -102,6 +102,16 @@
                 android:onClick="onClickSubmit"
                 android:text="@string/Submit" />
 
+            <Button
+                android:id="@+id/button_demo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="128dp"
+                android:layout_marginBottom="99dp"
+                android:onClick="onClickDemo"
+                android:text="@string/Demo" />
 
 
         </RelativeLayout>

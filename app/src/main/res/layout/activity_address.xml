@@ -62,7 +62,7 @@
 
     <EditText
         android:id="@+id/streenNameBox"
-        android:layout_width="wrap_content"
+        android:layout_width="116dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"

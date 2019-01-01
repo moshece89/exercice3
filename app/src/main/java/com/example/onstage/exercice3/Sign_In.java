@@ -391,8 +391,8 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
         Log.d(TAG, "update UI >>>");
 
         if (currentUser == null) {
-            Toast message = new Toast(this);
-            message.makeText(this, "you don't exist", Toast.LENGTH_SHORT).show();
+            //Toast message = new Toast(this);
+            //message.makeText(this, "you don't exist", Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent(getApplicationContext(), MyStorageProduct.class);
             if (wayOfConnection != null) {

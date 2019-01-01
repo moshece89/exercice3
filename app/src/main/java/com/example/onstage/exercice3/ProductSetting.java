@@ -2,6 +2,7 @@ package com.example.onstage.exercice3;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -252,5 +253,10 @@ public class ProductSetting extends AppCompatActivity {
         }
     }
 
+    public void onClickDemo(View v)
+    {
+        startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("https://www.youtube.com/watch?v=uysgtGh0Ve4")));
+        Log.i("Video", "Video Playing....");
+    }
 
 }
