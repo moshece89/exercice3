@@ -17,6 +17,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -55,6 +56,7 @@ public class ProductSetting extends AppCompatActivity {
     private Button submit ;
     private StringBuilder sb;
     private FirebaseAuth mAuth;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,7 @@ public class ProductSetting extends AppCompatActivity {
         ImageView carImage;
         TextView makers, model, year, color , price, id;
 
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         //----------------- texview and image picture button
         final TextView stock;

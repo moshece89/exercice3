@@ -24,6 +24,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -51,6 +52,7 @@ public class MyStorageProduct extends AppCompatActivity {
     private Iterator<Map.Entry<String, Car>> iter;
     private String searchString = null;
     private Boolean firstRun = true;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -63,6 +65,7 @@ public class MyStorageProduct extends AppCompatActivity {
     //    final TableLayout linearLayout = findViewById(R.id.layoutOptions);
         //final ConstraintLayout daddy = findViewById(R.id.layoutOption);
         DatabaseReference mReferenceUsers = DatabaseToApplication.mDatabase.getReference("users");
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         mReferenceUsers.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

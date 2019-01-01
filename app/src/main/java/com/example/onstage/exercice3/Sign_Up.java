@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,11 +28,14 @@ public class Sign_Up extends AppCompatActivity {
     public String m_email;
     private FirebaseAuth m_Auth;
 
+    private FirebaseAnalytics mFirebaseAnalytics;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign__up);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         m_Auth = FirebaseAuth.getInstance();
 

@@ -9,11 +9,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import model.Car;
 
 public class address extends AppCompatActivity {
     private Car myCar;
     private Handler m_Handler = new Handler();
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     //------------------------ we are not conducting any data verification checks since this is not part of the exercise, this is only added as a demonstration of user experience ---------------
     @Override
@@ -23,6 +26,7 @@ public class address extends AppCompatActivity {
         final String maker = getIntent().getStringExtra(Constants.MAKER);
         final String ids = getIntent().getStringExtra(Constants.ID);
         myCar = DatabaseToApplication.myCars.getCarListToMaker().get(maker + ids);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
     }
 
