@@ -7,12 +7,17 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 public class Filter extends AppCompatActivity {
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
     }
 
     public void onClickFilter(View v)
@@ -21,6 +26,13 @@ public class Filter extends AppCompatActivity {
         EditText maxYear =findViewById(R.id.editText_MaxYear);
         EditText minPrice =findViewById(R.id.editText_minPrice);
         EditText maxPrice =findViewById(R.id.editText_MaxPrice);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("min_price", minPrice.getText().toString());
+        bundle.putString("min_price", minPrice.getText().toString());
+        bundle.putString("min_price", minPrice.getText().toString());
+        bundle.putString("min_price", minPrice.getText().toString());
+        mFirebaseAnalytics.logEvent("search_parameters", bundle);
 
         DatabaseToApplication.minPrice = Integer.parseInt(minPrice.getText().toString());
         DatabaseToApplication.maxPrice = Integer.parseInt(maxPrice.getText().toString());

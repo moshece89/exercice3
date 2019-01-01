@@ -30,6 +30,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
@@ -61,6 +62,8 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
     private FirebaseRemoteConfig anonymous = FirebaseRemoteConfig.getInstance();
     private Button mAnnonymosSignin;
 
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +77,7 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
 
         anonymous.activateFetched();
         //updateButtonVisibility();
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         mAnnonymosSignin = findViewById(R.id.button_anonymousButton);
         // Facebook Login
