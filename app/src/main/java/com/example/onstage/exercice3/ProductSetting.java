@@ -31,17 +31,13 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import model.Car;
-import model.Cars;
 import model.CommentUser;
-import model.Comments;
 import model.User;
 import model.Users;
 

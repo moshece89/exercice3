@@ -1,6 +1,5 @@
 package com.example.onstage.exercice3;
 
-import android.app.Service;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;

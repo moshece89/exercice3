@@ -24,14 +24,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import model.Car;
 import model.Cars;
 import model.CommentUser;
-import model.Comments;
 import model.User;
 import model.Users;
 
@@ -68,8 +65,6 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 GenericTypeIndicator<HashMap<String,User>> genericTypeIndicator =new GenericTypeIndicator<HashMap<String, User>>(){};
-                //GenericTypeIndicator<List<User>> genericTypeIndicator =new GenericTypeIndicator<List<User>>(){};
-                //DatabaseToApplication.userslist =dataSnapshot.getValue(genericTypeIndicator);
                 DatabaseToApplication.userList = dataSnapshot.getValue(genericTypeIndicator);
                 DatabaseToApplication.updateIdFirebase(DatabaseToApplication.userList);
                 DatabaseToApplication.users = new Users(DatabaseToApplication.userList);
@@ -88,7 +83,6 @@ public class SplashScreen extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 GenericTypeIndicator<HashMap<String,CommentUser>> genericTypeIndicator =new GenericTypeIndicator<HashMap<String, CommentUser>>(){};
                 DatabaseToApplication.commentUserList = dataSnapshot.getValue(genericTypeIndicator);
-                //DatabaseToApplication.comments = new Comments(DatabaseToApplication.commentUserList);
 
             }
 

@@ -1,12 +1,5 @@
 package com.example.onstage.exercice3;
 
-import java.util.List;
-
-import model.Car;
-import model.Cars;
-import model.CommentUser;
-import model.User;
-
 public class Constants {
     public static final String WRONG_PASSSWORD_MESSAGE = "The passwords do not match, please try again. \n The passwords in the m_password and the confirm m_password need to match";
     public static final int MESSAGE_DURATION = 3000;
