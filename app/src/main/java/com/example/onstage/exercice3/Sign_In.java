@@ -20,6 +20,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.flurry.android.FlurryAgent;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -63,7 +64,7 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
     private Button mAnnonymosSignin;
 
     private FirebaseAnalytics mFirebaseAnalytics;
-    Bundle bundle = new Bundle();
+    private Bundle bundle = new Bundle();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,9 +103,7 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
                     DatabaseToApplication.mDatabase.getReference(Constants.USERS).child(key).setValue(user1);
                 }
 
-                bundle.putString("user_name", user.getDisplayName());
-                bundle.putString("user_email", user.getEmail());
-                mFirebaseAnalytics.logEvent("facebook_login", bundle);
+
             }
 
             @Override
@@ -165,6 +164,12 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
                 }
             }
         };
+        new FlurryAgent.Builder()
+                .withLogEnabled(true)
+                .withCaptureUncaughtExceptions(true)
+                .withContinueSessionMillis(10000)
+                .withLogLevel(Log.VERBOSE)
+                .build(this, Constants.FLURRY_API_KEY);
     }
 
     @Override
@@ -247,6 +252,10 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
                             Toast.makeText(Sign_In.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         } else {
+
+                            bundle.putString("user_name", mAuth.getCurrentUser().getDisplayName());
+                            bundle.putString("user_email", mAuth.getCurrentUser().getEmail());
+                            mFirebaseAnalytics.logEvent("facebook_login", bundle);
                             startActivity(new Intent(Sign_In.this, MyStorageProduct.class));
                             finish();
                         }
