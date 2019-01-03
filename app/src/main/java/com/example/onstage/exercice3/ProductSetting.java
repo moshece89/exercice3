@@ -67,13 +67,12 @@ public class ProductSetting extends AppCompatActivity {
         final String maker = getIntent().getStringExtra(Constants.MAKER);
         final String ids = getIntent().getStringExtra(Constants.ID);
         myCar = DatabaseToApplication.myCars.getCarListToMaker().get(maker+ids);
-        URL image_URL = null;
         linearLayout = findViewById(R.id.linearLayout2_test);
         newComment = findViewById(R.id.editTextComment);
         submit = findViewById(R.id.button_Submit);
         Button buy = findViewById(R.id.button_Buy);
         ImageView carImage;
-        TextView makers, model, year, color , price, id;
+        TextView  model;
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
@@ -85,12 +84,12 @@ public class ProductSetting extends AppCompatActivity {
         carImage = findViewById(R.id.imageViewCarPic);
         StringBuilder sb1 =new StringBuilder();
 
-        sb1.append("Maker:  ").append(myCar.getCar_maker()).append("\n");
-        sb1.append("Model:  ").append(myCar.getCar_model()).append("\n");
-        sb1.append("Year:  ").append(myCar.getYear()).append("\n");
-        sb1.append("Color:  ").append(myCar.getColor()).append("\n");
-        sb1.append("Price:  ").append(myCar.getPrice()).append("\n");
-        sb1.append("Id:  ").append(myCar.getId()).append("\n");
+        sb1.append(Constants.MAKERPRODUCT).append(myCar.getCar_maker()).append("\n");
+        sb1.append(Constants.MODEL).append(myCar.getCar_model()).append("\n");
+        sb1.append(Constants.YEAR).append(myCar.getYear()).append("\n");
+        sb1.append(Constants.COLOR).append(myCar.getColor()).append("\n");
+        sb1.append(Constants.PRICE).append(myCar.getPrice()).append("\n");
+        sb1.append(Constants.IDPRODUCT).append(myCar.getId()).append("\n");
         model.setText(sb1);
 
         Picasso.get().load(myCar.getImage_URL()).fit().placeholder(R.mipmap.ic_launcher).into(carImage);
@@ -110,8 +109,9 @@ public class ProductSetting extends AppCompatActivity {
         DatabaseToApplication.userListAuth= new HashMap<>();
 
         FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference mReference = mDatabase.getReference("cars").child(Integer.toString(myCar.getRow()));
-        DatabaseReference mReferenceUsers = DatabaseToApplication.mDatabase.getReference("users");
+        DatabaseReference mReference = mDatabase.getReference(Constants.CARS).child(Integer.toString(myCar.getRow()));
+        DatabaseReference mReferenceUsers = DatabaseToApplication.mDatabase.getReference(Constants.USERS);
+        DatabaseReference mReferenceComments = DatabaseToApplication.mDatabase.getReference(Constants.COMMENTS);
 
 
         //----------------------- listener---------------------------
@@ -130,7 +130,6 @@ public class ProductSetting extends AppCompatActivity {
 
             }
         });
-        DatabaseReference mReferenceComments = DatabaseToApplication.mDatabase.getReference("comments");
 
         mReferenceComments.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -142,8 +141,6 @@ public class ProductSetting extends AppCompatActivity {
                 Object key = it;
                 while (it.hasNext()){
                     key = it.next();
-                    Log.d("keykeykey",key.toString());
-                    Log.d("keykeykey",DatabaseToApplication.commentUserList.get(key).getComment());
                     if(DatabaseToApplication.commentUserList.get(key).getIdOfProduct().compareTo(myCar.getId())==0)
                     {
                         cardView = new CardView(getApplicationContext());
@@ -171,7 +168,7 @@ public class ProductSetting extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 GenericTypeIndicator<Car> genericTypeIndicator =new GenericTypeIndicator<Car>(){};
                 myCar = dataSnapshot.getValue(genericTypeIndicator);
-                stock.setText("Stock:"+Integer.toString(myCar.getStock()));
+                stock.setText(Constants.STOCK+Integer.toString(myCar.getStock()));
 
             }
 
@@ -190,7 +187,7 @@ public class ProductSetting extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), Sign_In.class);
             Toast.makeText(this , R.string.You_Are_anonymous_Toast_Message,
                     Toast.LENGTH_LONG).show();
-            intent.putExtra("userSettings", "anonymos");
+            intent.putExtra(Constants.USERSETTING, Constants.ANONYMOUS);
             startActivity(intent);
         }
         else{
@@ -198,7 +195,7 @@ public class ProductSetting extends AppCompatActivity {
             if(Integer.parseInt(stock[1]) == 0)
             {
                 Toast toast = new Toast(getApplicationContext());
-                toast.makeText(ProductSetting.this, "this item is out of stock, you will be able to purchase it once we restock,", Toast.LENGTH_SHORT).show();
+                toast.makeText(ProductSetting.this, Constants.OUTOFSTOCK, Toast.LENGTH_SHORT).show();
             }
             else{
       Intent intent = new Intent (getApplicationContext(), address.class);
@@ -222,7 +219,7 @@ public class ProductSetting extends AppCompatActivity {
     public static Drawable LoadImageFromWebOperations(String url) {
         try {
             InputStream is = (InputStream) new URL(url).getContent();
-            Drawable d = Drawable.createFromStream(is, "src name");
+            Drawable d = Drawable.createFromStream(is, Constants.SRCNAME);
             return d;
         } catch (Exception e) {
             return null;
@@ -239,9 +236,9 @@ public class ProductSetting extends AppCompatActivity {
             CommentUser commentUser = new CommentUser(users, commentString, idOfCar);
 
 
-            String key = DatabaseToApplication.mDatabase.getReference("comments").push().getKey();
+            String key = DatabaseToApplication.mDatabase.getReference(Constants.COMMENTS).push().getKey();
             DatabaseToApplication.commentUserList.put(key, commentUser);
-            DatabaseToApplication.mDatabase.getReference("comments").child(key).setValue(commentUser);
+            DatabaseToApplication.mDatabase.getReference(Constants.COMMENTS).child(key).setValue(commentUser);
 
             Toast toast = new Toast(getApplicationContext());
             toast.makeText(ProductSetting.this, Constants.SUBMIT_MESSAGE, Toast.LENGTH_SHORT).show();
@@ -258,8 +255,8 @@ public class ProductSetting extends AppCompatActivity {
 
     public void onClickDemo(View v)
     {
-        startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("https://www.youtube.com/watch?v=uysgtGh0Ve4")));
-        Log.i("Video", "Video Playing....");
+        startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(Constants.URLDEMO)));
+        Log.d("Video", "Video Playing....");
     }
 
 }

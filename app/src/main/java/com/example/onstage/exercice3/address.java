@@ -33,7 +33,7 @@ public class address extends AppCompatActivity {
     public void OnClickSubmit(View v) {
         if(verifyInputs())
         {
-        Toast.makeText(this, "The car will be shipped to the specified address", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, Constants.SHIPPEDSUCCESS, Toast.LENGTH_LONG).show();
         myCar.sellCar();
 
         m_Handler.postDelayed(new Runnable() {
@@ -44,7 +44,7 @@ public class address extends AppCompatActivity {
         }, 1000);
     }
         else {
-            Toast.makeText(this, "Please fill all the fields properly so we can ship your order.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, Constants.SHIPPEDNOTSUCCESS, Toast.LENGTH_LONG).show();
 
         }
     }

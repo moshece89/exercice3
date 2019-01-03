@@ -98,8 +98,8 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
                 if (user != null) {
                     user1.setIdAuth(user.getUid());
 
-                    String key = DatabaseToApplication.mDatabase.getReference("users").push().getKey();
-                    DatabaseToApplication.mDatabase.getReference("users").child(key).setValue(user1);
+                    String key = DatabaseToApplication.mDatabase.getReference(Constants.USERS).push().getKey();
+                    DatabaseToApplication.mDatabase.getReference(Constants.USERS).child(key).setValue(user1);
                 }
 
                 bundle.putString("user_name", user.getDisplayName());
@@ -189,10 +189,10 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
             anonymosSignIn = true;
             user1.setIdAuth(user.getUid());
             user1.setId(DatabaseToApplication.userList.size() + 1);
-            String key = DatabaseToApplication.mDatabase.getReference("users").push().getKey();
-            DatabaseToApplication.mDatabase.getReference("users").child(key).setValue(user1);
+            String key = DatabaseToApplication.mDatabase.getReference(Constants.USERS).push().getKey();
+            DatabaseToApplication.mDatabase.getReference(Constants.USERS).child(key).setValue(user1);
         }
-        updateUI(user, "anonymous");
+        updateUI(user, Constants.ANONYMOUS);
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {

@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.RadioButton;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -28,17 +27,16 @@ public class Filter extends AppCompatActivity {
         EditText maxPrice =findViewById(R.id.editText_MaxPrice);
 
         Bundle bundle = new Bundle();
-        bundle.putString("min_price", minPrice.getText().toString());
-        bundle.putString("max_price", maxPrice.getText().toString());
-        bundle.putString("min_year", minYear.getText().toString());
-        bundle.putString("max_year", maxYear.getText().toString());
-        mFirebaseAnalytics.logEvent("search_parameters", bundle);
+        bundle.putString(Constants.MINPRICE, minPrice.getText().toString());
+        bundle.putString(Constants.MAXPRICE, maxPrice.getText().toString());
+        bundle.putString(Constants.MINYEAR, minYear.getText().toString());
+        bundle.putString(Constants.MAXYEAR, maxYear.getText().toString());
+        mFirebaseAnalytics.logEvent(Constants.SEARCHPARAMETER, bundle);
 
         DatabaseToApplication.minPrice = Integer.parseInt(minPrice.getText().toString());
         DatabaseToApplication.maxPrice = Integer.parseInt(maxPrice.getText().toString());
         DatabaseToApplication.minYear = Integer.parseInt(minYear.getText().toString());
         DatabaseToApplication.maxYear = Integer.parseInt(maxYear.getText().toString());
-       // DatabaseToApplication.modelClicked = ((RadioButton)findViewById(R.id.radioButton_Model)).isChecked();
         Intent intent =new Intent(getApplicationContext(), MyStorageProduct.class);
         startActivity(intent);
     }

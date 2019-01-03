@@ -75,8 +75,8 @@ public class Sign_Up extends AppCompatActivity {
                             User user1 = new User();
                             user1.setIdAuth(user.getUid());
                             user1.setId(DatabaseToApplication.userList.size()+1);
-                            String key = DatabaseToApplication.mDatabase.getReference("users").push().getKey();
-                            DatabaseToApplication.mDatabase.getReference("users").child(key).setValue(user1);
+                            String key = DatabaseToApplication.mDatabase.getReference(Constants.USERS).push().getKey();
+                            DatabaseToApplication.mDatabase.getReference(Constants.USERS).child(key).setValue(user1);
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.

@@ -61,10 +61,8 @@ public class MyStorageProduct extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         DatabaseToApplication.mDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference mReferenceCars = DatabaseToApplication.mDatabase.getReference("cars");
-    //    final TableLayout linearLayout = findViewById(R.id.layoutOptions);
-        //final ConstraintLayout daddy = findViewById(R.id.layoutOption);
-        DatabaseReference mReferenceUsers = DatabaseToApplication.mDatabase.getReference("users");
+        DatabaseReference mReferenceCars = DatabaseToApplication.mDatabase.getReference(Constants.CARS);
+        DatabaseReference mReferenceUsers = DatabaseToApplication.mDatabase.getReference(Constants.USERS);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         mReferenceUsers.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -93,10 +91,7 @@ public class MyStorageProduct extends AppCompatActivity {
                 };
                 DatabaseToApplication.carList = dataSnapshot.getValue(genericTypeIndicator);
                 DatabaseToApplication.myCars = new Cars(DatabaseToApplication.carList);
-                /*TextView textView;
-                ImageView imageview;
-                StringBuilder sb;
-                TableRow tableRow;*/
+
 //--------------------search-----------------------------
                 EditText search = findViewById(R.id.editText_Search);
                 search.addTextChangedListener(mtextWatcher);
@@ -109,63 +104,12 @@ public class MyStorageProduct extends AppCompatActivity {
                     if (user != null) {
                         user1.setIdAuth(user.getUid());
                         user1.setId(DatabaseToApplication.userList.size() + 1);
-                        String key = DatabaseToApplication.mDatabase.getReference("users").push().getKey();
-                        DatabaseToApplication.mDatabase.getReference("users").child(key).setValue(user1);
+                        String key = DatabaseToApplication.mDatabase.getReference(Constants.USERS).push().getKey();
+                        DatabaseToApplication.mDatabase.getReference(Constants.USERS).child(key).setValue(user1);
                     }
                 }
 
                 setTableLayout();
-                /*if (DatabaseToApplication.modelClicked) {
-                    iter = DatabaseToApplication.myCars.getCarListToModel().entrySet().iterator();
-                } else {
-                    iter = DatabaseToApplication.myCars.getCarListToMaker().entrySet().iterator();
-                }
-                while (iter.hasNext()) {
-
-                    final Map.Entry<String, Car> entry = iter.next();
-
-                    String strings = entry.getValue().getPrice().substring(1,entry.getValue().getPrice().length());
-                    Log.d("keykeykeykey",strings);
-                    double price = Double.parseDouble(strings);
-                    if ((DatabaseToApplication.maxYear >= entry.getValue().getYear()) && (DatabaseToApplication.minYear <= entry.getValue().getYear())) {
-
-                        if ((DatabaseToApplication.maxPrice >= price) && (DatabaseToApplication.minPrice <= price)) {
-                            tableRow = new TableRow(getApplicationContext());
-                            sb = new StringBuilder();
-                            textView = new TextView(getApplicationContext());
-                            imageview = new ImageView(getApplicationContext());
-                            sb.append(entry.getValue().getCar_maker());
-                            sb.append("\n");
-                            sb.append(entry.getValue().getCar_model());
-                            sb.append("     ");
-                            sb.append(entry.getValue().getPrice());
-
-                            textView.setText(sb.toString());
-                            Picasso.get().load(entry.getValue().getImage_URL()).fit().placeholder(R.mipmap.ic_launcher).into(imageview);
-
-                            CardView cardView = new CardView(getApplicationContext());
-
-                            textView.setVisibility(View.VISIBLE);
-                            tableRow.addView(imageview);
-                            cardView.addView(textView);
-                            tableRow.addView(cardView);
-                            tableRow.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Intent intent = new Intent(getApplicationContext(), ProductSetting.class);
-                                    intent.putExtra(Constants.MAKER, entry.getValue().getCar_maker());
-                                    intent.putExtra(Constants.ID, entry.getValue().getId());
-                                    startActivity(intent);
-                                }
-                            });
-
-                            linearLayout.addView(tableRow);
-                            if (iter.hasNext()) {
-                                sb.append(',').append(' ');
-                            }
-                        }
-                    }
-                }*/
             }
 
 
@@ -202,7 +146,6 @@ public class MyStorageProduct extends AppCompatActivity {
 
         public void onTextChanged(CharSequence s, int start, int before,
                                   int count) {
-            Log.d("keyyyyyyy", s.toString());
             if((s.toString().compareTo("") == 0) || (s.toString().compareTo(" ") == 0))
             {
                 searchString = null;
@@ -276,7 +219,6 @@ public class MyStorageProduct extends AppCompatActivity {
             final Map.Entry<String, Car> entry = iter.next();
 
             String strings = entry.getValue().getPrice().substring(1,entry.getValue().getPrice().length());
-            Log.d("keykeykeykey",strings);
             double price = Double.parseDouble(strings);
             if ((DatabaseToApplication.maxYear >= entry.getValue().getYear()) && (DatabaseToApplication.minYear <= entry.getValue().getYear())) {
 

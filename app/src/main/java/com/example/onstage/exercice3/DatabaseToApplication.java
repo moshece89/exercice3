@@ -39,8 +39,6 @@ public class DatabaseToApplication {
         DatabaseToApplication.userListAuth= new HashMap<>();
         while (it.hasNext()){
             key = it.next();
-            Log.d("keykey",key.toString());
-            Log.d("keykey",userList.get(key).getIdAuth());
             DatabaseToApplication.userListAuth.put(userList.get(key).getIdAuth(),userList.get(key));
 
         }

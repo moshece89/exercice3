@@ -23,5 +23,31 @@ public class Constants {
     public static final String SUBMIT_MESSAGE = "Your comment as posted";
     public static final String MAKER = "Maker";
     public static final String ID="id";
+    public static final String USERSETTING ="userSettings";
+    public static final String ANONYMOUS = "anonymos";
+    public static final String OUTOFSTOCK = "this item is out of stock, you will be able to purchase it once we restock,";
+    public static final String CARS = "cars";
+    public static final String USERS = "users";
+    public static final String COMMENTS = "comments";
+    public static final String URLDEMO =  "https://www.youtube.com/watch?v=uysgtGh0Ve4";
+    public static final String SRCNAME = "src name";
+    public static final String STOCK = "Stock:";
+    public static final String MAKERPRODUCT = "Maker:   ";
+    public static final String MODEL = "Model:  ";
+    public static final String IDPRODUCT = "ID:    ";
+    public static final String PRICE = "Price:  ";
+    public static final String YEAR = "Year:    ";
+    public static final String COLOR = "Color:  ";
+    public static final String MINPRICE = "min_price";
+    public static final String MAXPRICE = "max_price";
+    public static final String MINYEAR = "min_year";
+    public static final String MAXYEAR = "max_year";
+    public static final String SEARCHPARAMETER = "search_parameters";
+    public static final String SHIPPEDSUCCESS = "The car will be shipped to the specified address";
+    public static final String SHIPPEDNOTSUCCESS = "Please fill all the fields properly so we can ship your order.";
+    public static final String
+
+
+
 
 }
