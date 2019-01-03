@@ -29,9 +29,9 @@ public class Filter extends AppCompatActivity {
 
         Bundle bundle = new Bundle();
         bundle.putString("min_price", minPrice.getText().toString());
-        bundle.putString("min_price", minPrice.getText().toString());
-        bundle.putString("min_price", minPrice.getText().toString());
-        bundle.putString("min_price", minPrice.getText().toString());
+        bundle.putString("max_price", maxPrice.getText().toString());
+        bundle.putString("min_year", minYear.getText().toString());
+        bundle.putString("max_year", maxYear.getText().toString());
         mFirebaseAnalytics.logEvent("search_parameters", bundle);
 
         DatabaseToApplication.minPrice = Integer.parseInt(minPrice.getText().toString());

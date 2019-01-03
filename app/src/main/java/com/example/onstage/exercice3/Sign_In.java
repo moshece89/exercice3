@@ -63,6 +63,7 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
     private Button mAnnonymosSignin;
 
     private FirebaseAnalytics mFirebaseAnalytics;
+    Bundle bundle = new Bundle();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +101,10 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
                     String key = DatabaseToApplication.mDatabase.getReference("users").push().getKey();
                     DatabaseToApplication.mDatabase.getReference("users").child(key).setValue(user1);
                 }
+
+                bundle.putString("user_name", user.getDisplayName());
+                bundle.putString("user_email", user.getEmail());
+                mFirebaseAnalytics.logEvent("facebook_login", bundle);
             }
 
             @Override
@@ -110,6 +115,9 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
             @Override
             public void onError(FacebookException error) {
                 Log.d(TAG, "facebook:onError", error);
+                bundle.putString("login_status", "failed");
+                bundle.putString("failed_reason", error.toString());
+                mFirebaseAnalytics.logEvent("facebook_login", bundle);
             }
         });
 
@@ -203,7 +211,17 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
                             Log.w(TAG, "signInWithCredential", task.getException());
                             Toast.makeText(Sign_In.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
+                            bundle.putString("login_status", "failed");
+                            bundle.putString("failed_reason", task.getException().toString());
+
+                            mFirebaseAnalytics.logEvent("google_login", bundle);
+
                         } else {
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                            bundle.putString("user_name", user.getDisplayName());
+                            bundle.putString("user_email", user.getEmail());
+                            mFirebaseAnalytics.logEvent("google_login", bundle);
                             startActivity(new Intent(Sign_In.this, MyStorageProduct.class));
                             finish();
                         }
