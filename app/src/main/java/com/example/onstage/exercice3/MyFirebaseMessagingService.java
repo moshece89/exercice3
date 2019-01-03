@@ -33,7 +33,6 @@ public void onMessageReceived(RemoteMessage remoteMessage) {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
-        notificationBuilder.setSmallIcon(R.drawable.eistein_launsher_background);
         notificationBuilder.setContentTitle("M and F LTD");
         notificationBuilder.setContentText(messageBody);
         notificationBuilder.setAutoCancel(true);

@@ -45,8 +45,6 @@ public class Constants {
     public static final String SEARCHPARAMETER = "search_parameters";
     public static final String SHIPPEDSUCCESS = "The car will be shipped to the specified address";
     public static final String SHIPPEDNOTSUCCESS = "Please fill all the fields properly so we can ship your order.";
-
-
-
+    public static final String FLURRY_API_KEY="SQYJ5KZJ9HSR8D45HJ2M";
 
 }

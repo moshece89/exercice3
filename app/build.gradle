@@ -37,6 +37,13 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:16.0.1'
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
+    // Recommended to add Google Play Services
+    implementation 'com.google.android.gms:play-services-base:15.0.1'
+    implementation 'com.google.android.gms:play-services-ads:15.0.1'
+    // Required for Flurry Analytics integration
+    implementation 'com.flurry.android:analytics:11.4.0@aar'
+    // Optional - If you want to use the Ads SDK
+    implementation 'com.flurry.android:ads:11.4.0@aar'
 
 }
 apply plugin: 'com.google.gms.google-services'
