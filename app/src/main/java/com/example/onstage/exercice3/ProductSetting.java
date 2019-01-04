@@ -1,5 +1,7 @@
 package com.example.onstage.exercice3;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -44,6 +46,7 @@ import model.Users;
 public class ProductSetting extends AppCompatActivity {
 
 
+    private static final String TAG = "ProductSetting";
     private CardView cardView;
     private TextView textView;
     private Car myCar;
@@ -56,6 +59,8 @@ public class ProductSetting extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.e(TAG, "onCreate() >>");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_setting);
         mAuth = FirebaseAuth.getInstance();
@@ -173,33 +178,43 @@ public class ProductSetting extends AppCompatActivity {
 
             }
         });
+        Log.e(TAG, "onCreate() >>");
 
     }
 
     public void onClickBuy(View v)
     {
-        if(mAuth.getCurrentUser().isAnonymous())
-        {
-            Intent intent = new Intent(getApplicationContext(), Sign_In.class);
-            Toast.makeText(this , R.string.You_Are_anonymous_Toast_Message,
-                    Toast.LENGTH_LONG).show();
-            intent.putExtra(Constants.USERSETTING, Constants.ANONYMOUS);
-            startActivity(intent);
-        }
-        else{
-            String[] stock = ((TextView)findViewById(R.id.textView_Stock)).getText().toString().split(":");
-            if(Integer.parseInt(stock[1]) == 0)
-            {
-                Toast toast = new Toast(getApplicationContext());
-                toast.makeText(ProductSetting.this, Constants.OUTOFSTOCK, Toast.LENGTH_SHORT).show();
-            }
-            else{
-      Intent intent = new Intent (getApplicationContext(), address.class);
-      intent.putExtra(Constants.MAKER, getIntent().getStringExtra(Constants.MAKER));
-      intent.putExtra(Constants.ID, getIntent().getStringExtra(Constants.ID));
+        Log.e(TAG, "onClickBuy() >>");
 
-      startActivity(intent);}
-        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle(Constants.BUY);
+        builder.setMessage(Constants.CONFIRME_BUY);
+
+        builder.setPositiveButton(Constants.YES, new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                buyCar();
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton(Constants.NO, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
+
+        Log.e(TAG, "onClickBuy() >>");
+
 
     }
     public void onClickReturn(View v)
@@ -208,8 +223,11 @@ public class ProductSetting extends AppCompatActivity {
     }
     public  void returnToStorage()
     {
+        Log.e(TAG, "returnStorage() >>");
+
         Intent intent = new Intent(getApplicationContext(), MyStorageProduct.class);
         startActivity(intent);
+        Log.e(TAG, "returnStorage() >>");
     }
 
     public static Drawable LoadImageFromWebOperations(String url) {
@@ -224,6 +242,8 @@ public class ProductSetting extends AppCompatActivity {
 
 
     public void onClickSubmit(View v) {
+        Log.e(TAG, "onClickSubmit() >>");
+
         TextView comment = findViewById(R.id.editTextComment);
         String commentString = comment.getText().toString();
         String users = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -240,19 +260,56 @@ public class ProductSetting extends AppCompatActivity {
             toast.makeText(ProductSetting.this, Constants.SUBMIT_MESSAGE, Toast.LENGTH_SHORT).show();
 
             cardView = new CardView(getApplicationContext());
-            textView =new TextView(getApplicationContext());
+            textView = new TextView(getApplicationContext());
             sb = new StringBuilder();
             sb.append("    ").append(DatabaseToApplication.commentUserList.get(key).getComment());
             textView.setText(sb);
             cardView.addView(textView);
             linearLayout.addView(cardView);
         }
+
+
+
+        Log.e(TAG, "onClickSubmit() >>");
+
+    }
+
+    private void buyCar() {
+        Log.e(TAG, "buyCar() >>");
+
+        if(mAuth.getCurrentUser().isAnonymous())
+        {
+            Intent intent = new Intent(getApplicationContext(), Sign_In.class);
+            Toast.makeText(this , R.string.You_Are_anonymous_Toast_Message,
+                    Toast.LENGTH_LONG).show();
+            intent.putExtra(Constants.USERSETTING, Constants.ANONYMOUS);
+            startActivity(intent);
+        }
+        else{
+            String[] stock = ((TextView)findViewById(R.id.textView_Stock)).getText().toString().split(":");
+            if(Integer.parseInt(stock[1]) == 0)
+            {
+                Toast toast = new Toast(getApplicationContext());
+                toast.makeText(ProductSetting.this, Constants.OUTOFSTOCK, Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Intent intent = new Intent (getApplicationContext(), address.class);
+                intent.putExtra(Constants.MAKER, getIntent().getStringExtra(Constants.MAKER));
+                intent.putExtra(Constants.ID, getIntent().getStringExtra(Constants.ID));
+
+                startActivity(intent);}
+        }
+        Log.e(TAG, "buyCar() >>");
+
     }
 
     public void onClickDemo(View v)
     {
+        Log.e(TAG, "onClickDemo() >>");
         startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(Constants.URLDEMO)));
         Log.d("Video", "Video Playing....");
+
+        Log.e(TAG, "onClickDemo() >>");
     }
 
 }

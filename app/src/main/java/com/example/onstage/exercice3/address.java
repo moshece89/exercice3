@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -16,10 +17,13 @@ public class address extends AppCompatActivity {
     private Car myCar;
     private Handler m_Handler = new Handler();
     private FirebaseAnalytics mFirebaseAnalytics;
+    private String TAG = "Address";
 
     //------------------------ we are not conducting any data verification checks since this is not part of the exercise, this is only added as a demonstration of user experience ---------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.e(TAG, "onCreate() >>");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
         final String maker = getIntent().getStringExtra(Constants.MAKER);
@@ -27,9 +31,12 @@ public class address extends AppCompatActivity {
         myCar = DatabaseToApplication.myCars.getCarListToMaker().get(maker + ids);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
+        Log.e(TAG, "onCreate() >>");
     }
 
     public void OnClickSubmit(View v) {
+        Log.e(TAG, "onClickSubmit() >>");
+
         if(verifyInputs())
         {
         Toast.makeText(this, Constants.SHIPPEDSUCCESS, Toast.LENGTH_LONG).show();
@@ -46,15 +53,21 @@ public class address extends AppCompatActivity {
             Toast.makeText(this, Constants.SHIPPEDNOTSUCCESS, Toast.LENGTH_LONG).show();
 
         }
+        Log.e(TAG, "onClickSubmit() >>");
+
     }
 
 
     public void returnToStorage() {
+        Log.e(TAG, "returnToStorage() >>");
+
         Intent intent = new Intent(getApplicationContext(), MyStorageProduct.class);
         startActivity(intent);
+        Log.e(TAG, "returnToStorage() >>");
     }
 
     private boolean verifyInputs() {
+        Log.e(TAG, "verifyInputs() >>");
         boolean isLegal = false;
         EditText current = findViewById(R.id.nameBox);
         if (checkIfLegal(current))
@@ -87,16 +100,22 @@ public class address extends AppCompatActivity {
             }
 
         }
+        Log.e(TAG, "verifyInputs() >>");
+
         return isLegal;
     }
 
     private boolean checkIfLegal(EditText current) {
+        Log.e(TAG, "checkIfLegal() >>");
+
 
         boolean isLegal = false;
         int length = current.getText().toString().length();
       if(length >=2 )
           if( current.getText().toString().matches("[a-zA-Z]+"))
               isLegal = true;
+
+        Log.e(TAG, "checkIfLegal() >>");
 
       return isLegal;
     }

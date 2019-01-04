@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -33,14 +34,17 @@ import model.User;
 import model.Users;
 
 public class SplashScreen extends AppCompatActivity {
+    private static final String TAG = "SplashScreen";
     private Handler m_Handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.e(TAG, "onCreate() >>");
 
         //Remove title bar
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         DatabaseToApplication.mDatabase = FirebaseDatabase.getInstance();
+        Log.d("tokens", FirebaseInstanceId.getInstance().getToken());
         DatabaseReference mReferenceCars = DatabaseToApplication.mDatabase.getReference("cars");
         DatabaseReference mReferenceUsers = DatabaseToApplication.mDatabase.getReference("users");
         DatabaseReference mReferenceComments = DatabaseToApplication.mDatabase.getReference("comments");
@@ -102,9 +106,13 @@ public class SplashScreen extends AppCompatActivity {
                 startActivity(intent);
             }
         }, 3000);
+        Log.e(TAG, "onCreate() >>");
+
     }
 
     private void printkeyHash() {
+        Log.e(TAG, "printkeyHash() >>");
+
         try {
             PackageInfo info = getPackageManager().getPackageInfo("com.example.onstage.exercice3", PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
@@ -117,5 +125,7 @@ public class SplashScreen extends AppCompatActivity {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
+        Log.e(TAG, "printkeyHash() >>");
+
     }
 }

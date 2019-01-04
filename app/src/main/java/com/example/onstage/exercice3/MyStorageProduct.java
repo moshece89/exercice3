@@ -194,13 +194,17 @@ public class MyStorageProduct extends AppCompatActivity {
 
     public void onClickFilter(View v)
     {
+        Log.e(TAG, "onClickFilter() >>");
         Intent intent = new Intent(getApplicationContext(),Filter.class);
         startActivity(intent);
+
+        Log.e(TAG, "onClickFilter() >>");
     }
 
 
     private void setTableLayout()
     {
+        Log.e(TAG, "setTableLayout() >>");
         TableLayout tableLayout = findViewById(R.id.layoutOptions);
         TextView textView;
         ImageView imageview;
@@ -301,15 +305,17 @@ public class MyStorageProduct extends AppCompatActivity {
                 }
             }
         }
+        Log.e(TAG, "setTableLayout() >>");
     }
     @Override
     public void onBackPressed() {
+        Log.e(TAG, "onBackPressed() >>");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle("Log out?");
-        builder.setMessage("Are you sure you want to log out?");
+        builder.setTitle(Constants.LOGOUT);
+        builder.setMessage(Constants.CONFIRM_LOG_OUT);
 
-        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(Constants.YES, new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
                 signOut();
@@ -317,7 +323,7 @@ public class MyStorageProduct extends AppCompatActivity {
             }
         });
 
-        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(Constants.NO, new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -329,5 +335,6 @@ public class MyStorageProduct extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
 
+        Log.e(TAG, "onBackPressed() >>");
     }
 }

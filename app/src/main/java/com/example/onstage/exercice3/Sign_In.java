@@ -55,10 +55,9 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
     private GoogleApiClient mGoogleApiClient;
     private static final int RC_SIGN_IN = 9001;
 
-    public static final String TAG = "Sign_InComment";
+    public static final String TAG = "Sign_In_Comment";
     public String m_password;
     public String m_email;
-    private boolean anonymosSignIn = false;
     private SignInButton mGoogleSignInButton;
     private FirebaseRemoteConfig anonymous = FirebaseRemoteConfig.getInstance();
     private Button mAnnonymosSignin;
@@ -191,7 +190,6 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
         FirebaseUser user = mAuth.getCurrentUser();
         User user1 = new User();
         if (user != null) {
-            anonymosSignIn = true;
             user1.setIdAuth(user.getUid());
             user1.setId(DatabaseToApplication.userList.size() + 1);
             String key = DatabaseToApplication.mDatabase.getReference(Constants.USERS).push().getKey();
@@ -439,17 +437,17 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle("Quit");
-        builder.setMessage("Do you want to exit the app?");
+        builder.setTitle(Constants.QUIT);
+        builder.setMessage(Constants.CONFIRM_QUIT);
 
-        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(Constants.YES, new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
                 finishProgram();
             }
         });
 
-        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(Constants.NO, new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {

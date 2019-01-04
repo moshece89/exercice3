@@ -31,8 +31,11 @@ public class DatabaseToApplication {
     public static int minPrice = 0;
     public static int maxPrice = 50000000;
     public static boolean modelClicked = false;
+    private static String TAG = "DatabaseToApplication";
 
     public static void updateIdFirebase(HashMap<String, User> userList) {
+        Log.e(TAG, "updateIdFirebase() >>");
+
         Set keys = userList.keySet();
         Iterator it = keys.iterator();
         Object key = it;
@@ -42,5 +45,7 @@ public class DatabaseToApplication {
             DatabaseToApplication.userListAuth.put(userList.get(key).getIdAuth(),userList.get(key));
 
         }
+        Log.e(TAG, "updateIdFirebase() >>");
+
     }
 }
