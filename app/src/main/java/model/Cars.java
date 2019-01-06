@@ -57,6 +57,7 @@ public class Cars {
         }
         carListToModel = new TreeMap<String, Car>(carListToModel);
         carListToMaker = new TreeMap<String, Car>(carListToMaker);
+        catalogue = new TreeMap<String, Car>(catalogue);
     }
 
 }

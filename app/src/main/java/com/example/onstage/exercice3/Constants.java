@@ -47,6 +47,7 @@ public class Constants {
     public static final String CONFIRME_BUY = "Are you sure you want to buy this car?";
     public static final String QUIT = "Quit";
     public static final String CONFIRM_QUIT = "Do you want to exit the app?";
+    public static final String AUTHENTIFICATION = "Autentification";
 
 
 }

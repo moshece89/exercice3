@@ -42,6 +42,7 @@ public class DatabaseToApplication {
         DatabaseToApplication.userListAuth= new HashMap<>();
         while (it.hasNext()){
             key = it.next();
+            DatabaseToApplication.userList.get(key).setIdFirebase(key.toString());
             DatabaseToApplication.userListAuth.put(userList.get(key).getIdAuth(),userList.get(key));
 
         }

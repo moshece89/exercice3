@@ -127,7 +127,6 @@ public class Car {
 
     public String getCarPic(){return image_URL;}
 
-    @Exclude
     public void sellCar()
     {
         if(stock!=0)
@@ -135,8 +134,7 @@ public class Car {
           //  stock--;
             DatabaseReference mReference = mDatabase.getReference("cars");
 
-            id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            Log.d("keykey",id);
+            String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
             DatabaseToApplication.userListAuth.get(id).updateTheCarInPossession(this.id);
             DatabaseReference mReferences =mDatabase.getReference("users");
             mReferences.setValue(DatabaseToApplication.userList);

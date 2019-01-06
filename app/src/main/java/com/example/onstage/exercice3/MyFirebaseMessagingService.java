@@ -114,6 +114,11 @@ public void onMessageReceived(RemoteMessage remoteMessage) {
                         PendingIntent.FLAG_ONE_SHOT);
                 notificationBuilder.addAction(new NotificationCompat.Action(R.drawable.ic_shopping_cart_black_24dp,"Go to sale!",pendingShareIntent));
             }
+            if (value.contains("comment")) {
+                PendingIntent pendingShareIntent = PendingIntent.getActivity(this, 0 , intent,
+                        PendingIntent.FLAG_ONE_SHOT);
+                notificationBuilder.addAction(new NotificationCompat.Action(R.drawable.ic_shopping_cart_black_24dp,"comment",pendingShareIntent));
+            }
 
         }
 
@@ -129,6 +134,7 @@ public void onMessageReceived(RemoteMessage remoteMessage) {
         }
 
         notificationManager.notify(0 , notificationBuilder.build());
+        notificationManager.no
 
         Log.e(TAG, "onMessageReceived() <<");
 

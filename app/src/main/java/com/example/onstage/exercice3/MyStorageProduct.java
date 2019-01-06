@@ -337,4 +337,11 @@ public class MyStorageProduct extends AppCompatActivity {
 
         Log.e(TAG, "onBackPressed() >>");
     }
+
+    public void onClickMyAccount(View v)
+    {
+        Intent intent = new Intent(getApplicationContext(), MyAccount.class);
+        intent.putExtra(Constants.AUTHENTIFICATION, FirebaseAuth.getInstance().getCurrentUser().getUid());
+        startActivity(intent);
+    }
 }

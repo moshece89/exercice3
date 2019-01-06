@@ -293,10 +293,11 @@ public class ProductSetting extends AppCompatActivity {
                 toast.makeText(ProductSetting.this, Constants.OUTOFSTOCK, Toast.LENGTH_SHORT).show();
             }
             else{
-                Intent intent = new Intent (getApplicationContext(), address.class);
-                intent.putExtra(Constants.MAKER, getIntent().getStringExtra(Constants.MAKER));
-                intent.putExtra(Constants.ID, getIntent().getStringExtra(Constants.ID));
-
+                Intent intent =  new Intent(getApplicationContext(), MyStorageProduct.class);
+                //Intent intent = new Intent (getApplicationContext(), address.class);
+                //intent.putExtra(Constants.MAKER, getIntent().getStringExtra(Constants.MAKER));
+                //intent.putExtra(Constants.ID, getIntent().getStringExtra(Constants.ID));
+                myCar.sellCar();
                 startActivity(intent);}
         }
         Log.e(TAG, "buyCar() >>");
