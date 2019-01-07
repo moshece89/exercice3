@@ -10,12 +10,13 @@
         android:id="@+id/Setting_TextView"
         android:layout_width="262dp"
         android:layout_height="147dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toTopOf="@+id/CarInMyPossessionTable"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="8dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TableLayout
         android:id="@+id/CarInMyPossessionTable"

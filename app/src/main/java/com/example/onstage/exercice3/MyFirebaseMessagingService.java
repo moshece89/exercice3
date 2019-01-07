@@ -134,12 +134,12 @@ public void onMessageReceived(RemoteMessage remoteMessage) {
         }
 
         notificationManager.notify(0 , notificationBuilder.build());
-        notificationManager.no
+       // notificationManager.no
 
         Log.e(TAG, "onMessageReceived() <<");
 
 
-        //sendNotification(remoteMessage.getNotification().getBody());
+        sendNotification(remoteMessage.getNotification().getBody());
     }
 
    /* private void sendNotification(String messageBody) {

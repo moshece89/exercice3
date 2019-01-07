@@ -11,6 +11,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
@@ -23,12 +24,23 @@ import model.User;
 public class MyAccount extends AppCompatActivity {
 
     private static final String TAG = "Account";
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_account);
         createActivitieForMyAccount();
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
+        Bundle bundle = new Bundle();
+
+        bundle.putString("Name", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        bundle.putString("Email", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        bundle.putString("Email", FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        mFirebaseAnalytics.logEvent("Access_account", bundle);
     }
 
 
@@ -39,7 +51,7 @@ public class MyAccount extends AppCompatActivity {
         TableLayout tableLayout = findViewById(R.id.CarInMyPossessionTable);
         TextView setting = findViewById(R.id.Setting_TextView);
         User user;
-        String IdAuth =getIntent().getStringExtra(Constants.AUTHENTIFICATION);
+        String IdAuth = getIntent().getStringExtra(Constants.AUTHENTIFICATION);
         user = DatabaseToApplication.userListAuth.get(IdAuth);
         String settingString = "Name:   "+FirebaseAuth.getInstance().getCurrentUser().getDisplayName()+ "\n" +"Id Auth:    " + user.getIdAuth() + "\n";
         settingString += "Id:   " + user.getId() + "\n";

@@ -19,6 +19,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.flurry.android.FlurryAgent;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,6 +37,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import model.Car;
@@ -55,6 +57,8 @@ public class ProductSetting extends AppCompatActivity {
     private Button submit ;
     private StringBuilder sb;
     private FirebaseAuth mAuth;
+    private FlurryAgent mFlurryAgent;
+
     private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
@@ -92,6 +96,29 @@ public class ProductSetting extends AppCompatActivity {
         sb1.append(Constants.PRICE).append(myCar.getPrice()).append("\n");
         sb1.append(Constants.IDPRODUCT).append(myCar.getId()).append("\n");
         model.setText(sb1);
+
+
+        Bundle bundle = new Bundle();
+        bundle.putString("car_maker", myCar.getCar_maker());
+        bundle.putString("car_model", myCar.getCar_model());
+        bundle.putString("ITEM_NAME", myCar.getCar_model());
+        bundle.putString("ITEM_ID", myCar.getId());
+        bundle.putString("ITEM_CATEGORY", "car");
+        bundle.putString("car_color", myCar.getColor());
+        bundle.putDouble("PRICE", Double.parseDouble(myCar.getPrice().substring(1)));
+
+        Map<String, String> flurryData =  new HashMap<String, String>() { {
+            put("car_maker", myCar.getCar_maker());
+            put("car_model", myCar.getCar_model());
+            put("car_ID", myCar.getId());
+            put("car_color", myCar.getColor());
+            put("car_price", myCar.getPrice());
+        } };
+
+
+        mFlurryAgent.logEvent("product_view", flurryData);
+
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
 
         Picasso.get().load(myCar.getImage_URL()).fit().placeholder(R.mipmap.ic_launcher).into(carImage);
         if(myCar.getStock() == 0)
@@ -195,6 +222,17 @@ public class ProductSetting extends AppCompatActivity {
         builder.setPositiveButton(Constants.YES, new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString("car_maker", myCar.getCar_maker());
+                bundle.putString("car_model", myCar.getCar_model());
+                bundle.putString("car_ID", myCar.getId());
+                bundle.putString("car_color", myCar.getColor());
+                bundle.putString("car_price", myCar.getPrice());
+                bundle.putString("CURRENCY", "Dollar $$");
+                bundle.putDouble("VALUE", Double.parseDouble(myCar.getPrice().substring(1)));
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.ECOMMERCE_PURCHASE, bundle);
+
                 buyCar();
                 dialog.dismiss();
             }

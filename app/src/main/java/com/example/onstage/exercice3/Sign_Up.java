@@ -89,6 +89,12 @@ public class Sign_Up extends AppCompatActivity {
                             String key = DatabaseToApplication.mDatabase.getReference(Constants.USERS).push().getKey();
                             DatabaseToApplication.mDatabase.getReference(Constants.USERS).child(key).setValue(user1);
                             updateUI(user);
+
+                            Bundle bundle = new Bundle();
+
+                            bundle.putString("METHOD","Email and password");
+
+                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, bundle);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.e(TAG, task.toString(), task.getException());

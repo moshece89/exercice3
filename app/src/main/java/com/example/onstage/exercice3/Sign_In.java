@@ -17,7 +17,6 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.flurry.android.FlurryAgent;
@@ -29,7 +28,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthCredential;
@@ -85,8 +83,8 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
         FacebookSdk.sdkInitialize(getApplicationContext());
         mCallbackManager = CallbackManager.Factory.create();
 
-        LoginButton mFacebookSignInButton = (LoginButton) findViewById(R.id.facebook_Button);
-        mFacebookSignInButton.setReadPermissions("email", "public_profile", "user_birthday", "user_friends");
+        LoginButton mFacebookSignInButton = findViewById(R.id.facebook_Button);
+        mFacebookSignInButton.setReadPermissions("email", "public_profile", "user_birthday", "user_friends", "user_age_range");
 
         mFacebookSignInButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -95,6 +93,7 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
                 firebaseAuthWithFacebook(loginResult.getAccessToken());
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 User user1 = new User();
+
                 if (user != null) {
                     user1.setIdAuth(user.getUid());
 
@@ -196,6 +195,9 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
             DatabaseToApplication.mDatabase.getReference(Constants.USERS).child(key).setValue(user1);
         }
         updateUI(user, Constants.ANONYMOUS);
+        Bundle bundle = new Bundle();
+        bundle.putString("METHOD", "anonymos");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
@@ -221,10 +223,10 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
 
                         } else {
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
+                            bundle.putString("METHOD", "Google");
                             bundle.putString("user_name", user.getDisplayName());
                             bundle.putString("user_email", user.getEmail());
-                            mFirebaseAnalytics.logEvent("google_login", bundle);
+                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);
                             startActivity(new Intent(Sign_In.this, MyStorageProduct.class));
                             finish();
                         }
@@ -250,10 +252,11 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
                             Toast.makeText(Sign_In.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         } else {
-
+                            bundle.putString("METHOD", "Facebook");
                             bundle.putString("user_name", mAuth.getCurrentUser().getDisplayName());
                             bundle.putString("user_email", mAuth.getCurrentUser().getEmail());
-                            mFirebaseAnalytics.logEvent("facebook_login", bundle);
+                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);
+
                             startActivity(new Intent(Sign_In.this, MyStorageProduct.class));
                             finish();
                         }
@@ -306,7 +309,7 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
 
         if (verifyEmail(m_email)) {
             if (verifyPassword()) {
-                SignIEmail();
+                SignInEmail();
 
             } else {
                 message.makeText(this, Constants.INVALID_PASSWORD_FORMAT, Toast.LENGTH_LONG).show();
@@ -341,7 +344,7 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
 
     }
 
-    private void SignIEmail() {
+    private void SignInEmail() {
 
         Log.d(TAG, "Sign Email private >>>");
 
@@ -353,6 +356,11 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            bundle.putString("METHOD", "Email");
+                            bundle.putString("user_name", mAuth.getCurrentUser().getDisplayName());
+                            bundle.putString("user_email", mAuth.getCurrentUser().getEmail());
+                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);
+
                             updateUI(user, Constants.Email);
                         } else {
                             // If sign in fails, display a message to the user.

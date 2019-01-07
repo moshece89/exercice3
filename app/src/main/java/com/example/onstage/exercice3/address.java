@@ -35,24 +35,32 @@ public class address extends AppCompatActivity {
     }
 
     public void OnClickSubmit(View v) {
+
         Log.e(TAG, "onClickSubmit() >>");
 
-        if(verifyInputs())
-        {
-        Toast.makeText(this, Constants.SHIPPEDSUCCESS, Toast.LENGTH_LONG).show();
-        myCar.sellCar();
-
-        m_Handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                returnToStorage();
-            }
-        }, 1000);
-    }
+        if(verifyInputs()) {
+            Toast.makeText(this, Constants.SHIPPEDSUCCESS, Toast.LENGTH_LONG).show();
+            myCar.sellCar();
+            Bundle bundle = new Bundle();
+            bundle.putString("car_maker", myCar.getCar_maker());
+            bundle.putString("car_model", myCar.getCar_model());
+            bundle.putString("car_ID", myCar.getId());
+            bundle.putString("car_color", myCar.getColor());
+            bundle.putString("car_price", myCar.getPrice());
+            bundle.putString("CURRENCY", "Dollar $$");
+            bundle.putDouble("VALUE", Double.parseDouble(myCar.getPrice().substring(1)));
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.ECOMMERCE_PURCHASE, bundle);
+            m_Handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    returnToStorage();
+                }
+            }, 1000);
+        }
         else {
             Toast.makeText(this, Constants.SHIPPEDNOTSUCCESS, Toast.LENGTH_LONG).show();
-
         }
+
         Log.e(TAG, "onClickSubmit() >>");
 
     }
@@ -67,9 +75,11 @@ public class address extends AppCompatActivity {
     }
 
     private boolean verifyInputs() {
+
         Log.e(TAG, "verifyInputs() >>");
         boolean isLegal = false;
         EditText current = findViewById(R.id.nameBox);
+
         if (checkIfLegal(current))
         {
             current = findViewById(R.id.lastNameBox);
@@ -106,14 +116,16 @@ public class address extends AppCompatActivity {
     }
 
     private boolean checkIfLegal(EditText current) {
-        Log.e(TAG, "checkIfLegal() >>");
 
+        Log.e(TAG, "checkIfLegal() >>");
 
         boolean isLegal = false;
         int length = current.getText().toString().length();
+
       if(length >=2 )
-          if( current.getText().toString().matches("[a-zA-Z]+"))
+          if( current.getText().toString().matches("[a-zA-Z]+")) {
               isLegal = true;
+          }
 
         Log.e(TAG, "checkIfLegal() >>");
 
