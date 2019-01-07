@@ -25,7 +25,7 @@ public class address extends AppCompatActivity {
         Log.e(TAG, "onCreate() >>");
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_address);
+        setContentView(com.example.onstage.exercice3.R.layout.activity_address);
         final String maker = getIntent().getStringExtra(Constants.MAKER);
         final String ids = getIntent().getStringExtra(Constants.ID);
         myCar = DatabaseToApplication.myCars.getCarListToMaker().get(maker + ids);
@@ -78,26 +78,26 @@ public class address extends AppCompatActivity {
 
         Log.e(TAG, "verifyInputs() >>");
         boolean isLegal = false;
-        EditText current = findViewById(R.id.nameBox);
+        EditText current = findViewById(com.example.onstage.exercice3.R.id.nameBox);
 
         if (checkIfLegal(current))
         {
-            current = findViewById(R.id.lastNameBox);
+            current = findViewById(com.example.onstage.exercice3.R.id.lastNameBox);
             if (checkIfLegal(current))
             {
-                current = findViewById(R.id.counrtyBox);
+                current = findViewById(com.example.onstage.exercice3.R.id.counrtyBox);
                 if (checkIfLegal(current))
                 {
-                    current = findViewById(R.id.cityBox);
+                    current = findViewById(com.example.onstage.exercice3.R.id.cityBox);
                     if (checkIfLegal(current))
                     {
-                        current = findViewById(R.id.streenNameBox);
+                        current = findViewById(com.example.onstage.exercice3.R.id.streenNameBox);
                         if (checkIfLegal(current))
                         {
-                            current = findViewById(R.id.streetNumberBox);
+                            current = findViewById(com.example.onstage.exercice3.R.id.streetNumberBox);
                             if (current.getText().toString().length() >= 1)
                             {
-                                current = findViewById(R.id.zipCodeBox);
+                                current = findViewById(com.example.onstage.exercice3.R.id.zipCodeBox);
                                 if (current.getText().toString().length() >= 6 && current.getText().toString().length() <= 10)
                                 {
                                     isLegal = true;

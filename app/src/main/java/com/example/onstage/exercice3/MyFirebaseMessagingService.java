@@ -30,7 +30,7 @@ public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
         String title = "title";
         String body = "body";
-        int icon = R.drawable.ic_notifications_black_24dp;
+        int icon = com.example.onstage.exercice3.R.drawable.ic_notifications_black_24dp;
         Uri soundRri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Map<String,String> data;
         RemoteMessage.Notification notification;
@@ -71,7 +71,7 @@ public void onMessageReceived(RemoteMessage remoteMessage) {
 
         value = data.get("small_icon");
         if (value != null  && value.equals("alarm")) {
-            icon = R.drawable.ic_alarm_black_24dp;
+            icon = com.example.onstage.exercice3.R.drawable.ic_alarm_black_24dp;
         }
         value = data.get("sound");
         if (value != null) {
@@ -107,17 +107,17 @@ public void onMessageReceived(RemoteMessage remoteMessage) {
             if (value.contains("share")) {
                 PendingIntent pendingShareIntent = PendingIntent.getActivity(this, 0 , intent,
                         PendingIntent.FLAG_ONE_SHOT);
-                notificationBuilder.addAction(new NotificationCompat.Action(R.drawable.ic_share_black_24dp,"Share",pendingShareIntent));
+                notificationBuilder.addAction(new NotificationCompat.Action(com.example.onstage.exercice3.R.drawable.ic_share_black_24dp,"Share",pendingShareIntent));
             }
             if (value.contains("go to sale")) {
                 PendingIntent pendingShareIntent = PendingIntent.getActivity(this, 0 , intent,
                         PendingIntent.FLAG_ONE_SHOT);
-                notificationBuilder.addAction(new NotificationCompat.Action(R.drawable.ic_shopping_cart_black_24dp,"Go to sale!",pendingShareIntent));
+                notificationBuilder.addAction(new NotificationCompat.Action(com.example.onstage.exercice3.R.drawable.ic_shopping_cart_black_24dp,"Go to sale!",pendingShareIntent));
             }
             if (value.contains("comment")) {
                 PendingIntent pendingShareIntent = PendingIntent.getActivity(this, 0 , intent,
                         PendingIntent.FLAG_ONE_SHOT);
-                notificationBuilder.addAction(new NotificationCompat.Action(R.drawable.ic_shopping_cart_black_24dp,"comment",pendingShareIntent));
+                notificationBuilder.addAction(new NotificationCompat.Action(com.example.onstage.exercice3.R.drawable.ic_shopping_cart_black_24dp,"comment",pendingShareIntent));
             }
 
         }

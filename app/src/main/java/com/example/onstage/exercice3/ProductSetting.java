@@ -53,12 +53,17 @@ public class ProductSetting extends AppCompatActivity {
     private TextView textView;
     private Car myCar;
     private LinearLayout linearLayout;
-    private TextView newComment ;
-    private Button submit ;
+    private TextView newComment;
+    private Button submit;
     private StringBuilder sb;
     private FirebaseAuth mAuth;
     private FlurryAgent mFlurryAgent;
-
+    private static int sportsCars = 0;
+    private static int americanCars = 0;
+    private static int electricCars = 0;
+    private static int luxaryCars = 0;
+    private static int trucksAndJeeps = 0;
+    private static int japaneeseCars = 0;
     private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
@@ -71,15 +76,16 @@ public class ProductSetting extends AppCompatActivity {
 
         final String maker = getIntent().getStringExtra(Constants.MAKER);
         final String ids = getIntent().getStringExtra(Constants.ID);
-        myCar = DatabaseToApplication.myCars.getCarListToMaker().get(maker+ids);
+        myCar = DatabaseToApplication.myCars.getCarListToMaker().get(maker + ids);
         linearLayout = findViewById(R.id.linearLayout2_test);
         newComment = findViewById(R.id.editTextComment);
         submit = findViewById(R.id.button_Submit);
         Button buy = findViewById(R.id.button_Buy);
         ImageView carImage;
-        TextView  model;
-
+        TextView model;
+        double price = Double.parseDouble(myCar.getPrice().substring(1));
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
 
         //----------------- texview and image picture button
         final TextView stock;
@@ -87,13 +93,21 @@ public class ProductSetting extends AppCompatActivity {
 
         stock = findViewById(R.id.textView_Stock);
         carImage = findViewById(R.id.imageViewCarPic);
-        StringBuilder sb1 =new StringBuilder();
+        StringBuilder sb1 = new StringBuilder();
 
         sb1.append(Constants.MAKERPRODUCT).append(myCar.getCar_maker()).append("\n");
         sb1.append(Constants.MODEL).append(myCar.getCar_model()).append("\n");
         sb1.append(Constants.YEAR).append(myCar.getYear()).append("\n");
         sb1.append(Constants.COLOR).append(myCar.getColor()).append("\n");
-        sb1.append(Constants.PRICE).append(myCar.getPrice()).append("\n");
+        if(Sign_In.loggedInWith == "facebook")
+        {
+            price *= 0.9;
+            sb1.append("Facebook price:").append(price).append("\n");
+        }
+       else
+           {
+            sb1.append(Constants.PRICE).append(price).append("\n");
+        }
         sb1.append(Constants.IDPRODUCT).append(myCar.getId()).append("\n");
         model.setText(sb1);
 
@@ -105,28 +119,70 @@ public class ProductSetting extends AppCompatActivity {
         bundle.putString("ITEM_ID", myCar.getId());
         bundle.putString("ITEM_CATEGORY", "car");
         bundle.putString("car_color", myCar.getColor());
-        bundle.putDouble("PRICE", Double.parseDouble(myCar.getPrice().substring(1)));
+        bundle.putDouble("PRICE", price);
 
-        Map<String, String> flurryData =  new HashMap<String, String>() { {
-            put("car_maker", myCar.getCar_maker());
-            put("car_model", myCar.getCar_model());
-            put("car_ID", myCar.getId());
-            put("car_color", myCar.getColor());
-            put("car_price", myCar.getPrice());
-        } };
+        Map<String, String> flurryData = new HashMap<String, String>() {
+            {
+                put("car_maker", myCar.getCar_maker());
+                put("car_model", myCar.getCar_model());
+                put("car_ID", myCar.getId());
+                put("car_color", myCar.getColor());
+                put("car_price", myCar.getPrice());
+            }
+        };
 
 
         mFlurryAgent.logEvent("product_view", flurryData);
 
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+        if (myCar.getCar_maker() == "Maserati" || myCar.getCar_maker() == "Aston Martin" || myCar.getCar_maker() == "Jaguar" || myCar.getCar_maker() == "Alfa Romeo") {
+            sportsCars++;
+            if (isBiggest(sportsCars)) {
+                mFirebaseAnalytics.setUserProperty("favourite_cars", "sports");
+
+            }
+        }
+
+        else if (myCar.getCar_maker() == "Tesla") {
+            electricCars++;
+            if (isBiggest(electricCars)) {
+                mFirebaseAnalytics.setUserProperty("favourite_cars", "electric");
+
+            }
+        }
+
+        else if (myCar.getCar_maker() == "Ford" || myCar.getCar_maker() == "Dodge" || myCar.getCar_maker() == "Pontiac" || myCar.getCar_maker() == "Lincoln" || myCar.getCar_maker() == "GMC" || myCar.getCar_maker() == "Chevrolet" || myCar.getCar_maker() == "Chrysler" || myCar.getCar_maker() == "Buick" || myCar.getCar_maker() == "Plymouth" ) {
+            americanCars++;
+            if (isBiggest(americanCars)) {
+                mFirebaseAnalytics.setUserProperty("favourite_cars", "american");
+
+            }
+        }
+        else if (myCar.getCar_maker() == "Audi" || myCar.getCar_maker() == "Mercedes-Benz" || myCar.getCar_maker() == "Lexus") {
+            luxaryCars++;
+            if (isBiggest(luxaryCars)) {
+                mFirebaseAnalytics.setUserProperty("favourite_cars", "luxary");
+
+            }
+        }
+        else if (myCar.getCar_maker() == "Land Rover" || myCar.getCar_maker() == "Ram") {
+            trucksAndJeeps++;
+            if (isBiggest(trucksAndJeeps)) {
+                mFirebaseAnalytics.setUserProperty("favourite_cars", "trucks");
+
+            }
+        }
+            else {
+            japaneeseCars++;
+            if (isBiggest(japaneeseCars)) {
+                mFirebaseAnalytics.setUserProperty("favourite_cars", "japanese");
+            }
+        }
 
         Picasso.get().load(myCar.getImage_URL()).fit().placeholder(R.mipmap.ic_launcher).into(carImage);
-        if(myCar.getStock() == 0)
-        {
+        if (myCar.getStock() == 0) {
             buy.setEnabled(false);
-        }
-        else
-        {
+        } else {
             buy.setEnabled(true);
         }
 
@@ -134,7 +190,7 @@ public class ProductSetting extends AppCompatActivity {
         Set keys = DatabaseToApplication.commentUserList.keySet();
         Iterator it = keys.iterator();
         Object key = it;
-        DatabaseToApplication.userListAuth= new HashMap<>();
+        DatabaseToApplication.userListAuth = new HashMap<>();
 
         FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
         DatabaseReference mReference = mDatabase.getReference(Constants.CARS).child(Integer.toString(myCar.getRow()));
@@ -146,7 +202,8 @@ public class ProductSetting extends AppCompatActivity {
         mReferenceUsers.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<HashMap<String,User>> genericTypeIndicator =new GenericTypeIndicator<HashMap<String, User>>(){};
+                GenericTypeIndicator<HashMap<String, User>> genericTypeIndicator = new GenericTypeIndicator<HashMap<String, User>>() {
+                };
                 DatabaseToApplication.userList = dataSnapshot.getValue(genericTypeIndicator);
                 DatabaseToApplication.updateIdFirebase(DatabaseToApplication.userList);
                 DatabaseToApplication.users = new Users(DatabaseToApplication.userList);
@@ -162,17 +219,17 @@ public class ProductSetting extends AppCompatActivity {
         mReferenceComments.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<HashMap<String,CommentUser>> genericTypeIndicator =new GenericTypeIndicator<HashMap<String, CommentUser>>(){};
+                GenericTypeIndicator<HashMap<String, CommentUser>> genericTypeIndicator = new GenericTypeIndicator<HashMap<String, CommentUser>>() {
+                };
                 DatabaseToApplication.commentUserList = dataSnapshot.getValue(genericTypeIndicator);
                 Set keys = DatabaseToApplication.commentUserList.keySet();
                 Iterator it = keys.iterator();
                 Object key = it;
-                while (it.hasNext()){
+                while (it.hasNext()) {
                     key = it.next();
-                    if(DatabaseToApplication.commentUserList.get(key).getIdOfProduct().compareTo(myCar.getId())==0)
-                    {
+                    if (DatabaseToApplication.commentUserList.get(key).getIdOfProduct().compareTo(myCar.getId()) == 0) {
                         cardView = new CardView(getApplicationContext());
-                        textView =new TextView(getApplicationContext());
+                        textView = new TextView(getApplicationContext());
                         sb = new StringBuilder();
                         sb.append("    ").append(DatabaseToApplication.commentUserList.get(key).getComment());
                         textView.setText(sb);
@@ -194,9 +251,10 @@ public class ProductSetting extends AppCompatActivity {
         mReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<Car> genericTypeIndicator =new GenericTypeIndicator<Car>(){};
+                GenericTypeIndicator<Car> genericTypeIndicator = new GenericTypeIndicator<Car>() {
+                };
                 myCar = dataSnapshot.getValue(genericTypeIndicator);
-                stock.setText(Constants.STOCK+Integer.toString(myCar.getStock()));
+                stock.setText(Constants.STOCK + Integer.toString(myCar.getStock()));
 
             }
 
@@ -209,8 +267,7 @@ public class ProductSetting extends AppCompatActivity {
 
     }
 
-    public void onClickBuy(View v)
-    {
+    public void onClickBuy(View v) {
         Log.e(TAG, "onClickBuy() >>");
 
 
@@ -255,12 +312,12 @@ public class ProductSetting extends AppCompatActivity {
 
 
     }
-    public void onClickReturn(View v)
-    {
+
+    public void onClickReturn(View v) {
         returnToStorage();
     }
-    public  void returnToStorage()
-    {
+
+    public void returnToStorage() {
         Log.e(TAG, "returnStorage() >>");
 
         Intent intent = new Intent(getApplicationContext(), MyStorageProduct.class);
@@ -307,7 +364,6 @@ public class ProductSetting extends AppCompatActivity {
         }
 
 
-
         Log.e(TAG, "onClickSubmit() >>");
 
     }
@@ -315,37 +371,44 @@ public class ProductSetting extends AppCompatActivity {
     private void buyCar() {
         Log.e(TAG, "buyCar() >>");
 
-        if(mAuth.getCurrentUser().isAnonymous())
-        {
+        if (mAuth.getCurrentUser().isAnonymous()) {
             Intent intent = new Intent(getApplicationContext(), Sign_In.class);
-            Toast.makeText(this , R.string.You_Are_anonymous_Toast_Message,
+            Toast.makeText(this, R.string.You_Are_anonymous_Toast_Message,
                     Toast.LENGTH_LONG).show();
             intent.putExtra(Constants.USERSETTING, Constants.ANONYMOUS);
             startActivity(intent);
-        }
-        else{
-            String[] stock = ((TextView)findViewById(R.id.textView_Stock)).getText().toString().split(":");
-            if(Integer.parseInt(stock[1]) == 0)
-            {
+        } else {
+            String[] stock = ((TextView) findViewById(R.id.textView_Stock)).getText().toString().split(":");
+            if (Integer.parseInt(stock[1]) == 0) {
                 Toast toast = new Toast(getApplicationContext());
                 toast.makeText(ProductSetting.this, Constants.OUTOFSTOCK, Toast.LENGTH_SHORT).show();
-            }
-            else{
-                Intent intent =  new Intent(getApplicationContext(), MyStorageProduct.class);
+            } else {
+                Intent intent = new Intent(getApplicationContext(), MyStorageProduct.class);
                 //Intent intent = new Intent (getApplicationContext(), address.class);
                 //intent.putExtra(Constants.MAKER, getIntent().getStringExtra(Constants.MAKER));
                 //intent.putExtra(Constants.ID, getIntent().getStringExtra(Constants.ID));
                 myCar.sellCar();
-                startActivity(intent);}
+                startActivity(intent);
+            }
         }
         Log.e(TAG, "buyCar() >>");
 
     }
 
-    public void onClickDemo(View v)
+    private boolean isBiggest(int iCar)
     {
+        boolean biggest = false;
+
+        if (iCar >= sportsCars && iCar >= americanCars && iCar >= japaneeseCars && iCar >= luxaryCars && iCar >= trucksAndJeeps && iCar >= electricCars)
+        {
+            biggest = true;
+        }
+
+        return biggest;
+    }
+    public void onClickDemo(View v) {
         Log.e(TAG, "onClickDemo() >>");
-        startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(Constants.URLDEMO)));
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.URLDEMO)));
         Log.d("Video", "Video Playing....");
 
         Log.e(TAG, "onClickDemo() >>");

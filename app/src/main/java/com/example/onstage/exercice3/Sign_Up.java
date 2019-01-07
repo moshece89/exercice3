@@ -36,7 +36,7 @@ public class Sign_Up extends AppCompatActivity {
         Log.e(TAG, "onCreate() >>");
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign__up);
+        setContentView(com.example.onstage.exercice3.R.layout.activity_sign__up);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         m_Auth = FirebaseAuth.getInstance();
@@ -113,8 +113,8 @@ public class Sign_Up extends AppCompatActivity {
     public void onClick(View button) {
         Log.e(TAG, "onClick() >>");
 
-        m_email = ((TextView) findViewById(R.id.editText_Email)).getText().toString();
-        m_password = ((TextView) findViewById(R.id.editText_Passworld)).getText().toString();
+        m_email = ((TextView) findViewById(com.example.onstage.exercice3.R.id.editText_Email)).getText().toString();
+        m_password = ((TextView) findViewById(com.example.onstage.exercice3.R.id.editText_Passworld)).getText().toString();
 
         Toast message = new Toast(this);
 
@@ -166,7 +166,7 @@ public class Sign_Up extends AppCompatActivity {
         String confirmPassword;
         boolean identical = false;
 
-        confirmPassword = ((TextView) findViewById(R.id.editText_ConfirmPassworld)).getText().toString();
+        confirmPassword = ((TextView) findViewById(com.example.onstage.exercice3.R.id.editText_ConfirmPassworld)).getText().toString();
 
         if (m_password.compareTo(confirmPassword) == 0) {
             identical = true;

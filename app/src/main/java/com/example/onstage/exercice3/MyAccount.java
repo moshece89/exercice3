@@ -29,7 +29,7 @@ public class MyAccount extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_account);
+        setContentView(com.example.onstage.exercice3.R.layout.activity_my_account);
         createActivitieForMyAccount();
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
@@ -48,8 +48,8 @@ public class MyAccount extends AppCompatActivity {
         Log.e(TAG, "createAcitivity() >>");
 
 
-        TableLayout tableLayout = findViewById(R.id.CarInMyPossessionTable);
-        TextView setting = findViewById(R.id.Setting_TextView);
+        TableLayout tableLayout = findViewById(com.example.onstage.exercice3.R.id.CarInMyPossessionTable);
+        TextView setting = findViewById(com.example.onstage.exercice3.R.id.Setting_TextView);
         User user;
         String IdAuth = getIntent().getStringExtra(Constants.AUTHENTIFICATION);
         user = DatabaseToApplication.userListAuth.get(IdAuth);
@@ -79,7 +79,7 @@ public class MyAccount extends AppCompatActivity {
                 sb.append(car.getPrice());
 
                 textView.setText(sb.toString());
-                Picasso.get().load(car.getImage_URL()).fit().placeholder(R.mipmap.ic_launcher).into(imageview);
+                Picasso.get().load(car.getImage_URL()).fit().placeholder(com.example.onstage.exercice3.R.mipmap.ic_launcher).into(imageview);
 
                 CardView cardView = new CardView(getApplicationContext());
 

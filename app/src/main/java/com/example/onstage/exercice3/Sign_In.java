@@ -52,7 +52,7 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
     private FirebaseAuth.AuthStateListener mAuthListener;
     private GoogleApiClient mGoogleApiClient;
     private static final int RC_SIGN_IN = 9001;
-
+    public static String loggedInWith = null;
     public static final String TAG = "Sign_In_Comment";
     public String m_password;
     public String m_email;
@@ -96,7 +96,7 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
 
                 if (user != null) {
                     user1.setIdAuth(user.getUid());
-
+                    changeStatic("facebook");
                     String key = DatabaseToApplication.mDatabase.getReference(Constants.USERS).push().getKey();
                     DatabaseToApplication.mDatabase.getReference(Constants.USERS).child(key).setValue(user1);
                 }
@@ -252,6 +252,7 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
                             Toast.makeText(Sign_In.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         } else {
+                            changeStatic("facebook");
                             bundle.putString("METHOD", "Facebook");
                             bundle.putString("user_name", mAuth.getCurrentUser().getDisplayName());
                             bundle.putString("user_email", mAuth.getCurrentUser().getEmail());
@@ -263,7 +264,9 @@ public class Sign_In extends AppCompatActivity implements GoogleApiClient.OnConn
                     }
                 });
     }
-
+public void changeStatic(String signinMethod){
+        loggedInWith = signinMethod;
+}
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);

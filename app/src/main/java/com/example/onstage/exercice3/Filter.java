@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
+
 import com.flurry.android.FlurryAgent;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -24,7 +25,7 @@ public class Filter extends AppCompatActivity {
         Log.e(TAG, "onCreate() >>");
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filter);
+        setContentView(com.example.onstage.exercice3.R.layout.activity_filter);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         Log.e(TAG, "onCreate() >>");
 
@@ -35,10 +36,10 @@ public class Filter extends AppCompatActivity {
     {
         Log.e(TAG, "onClickFilter() >>");
 
-        final EditText minYear =findViewById(R.id.editText_minYear);
-        final EditText maxYear =findViewById(R.id.editText_MaxYear);
-        final EditText minPrice =findViewById(R.id.editText_minPrice);
-        final EditText maxPrice =findViewById(R.id.editText_MaxPrice);
+        final EditText minYear =findViewById(com.example.onstage.exercice3.R.id.editText_minYear);
+        final EditText maxYear =findViewById(com.example.onstage.exercice3.R.id.editText_MaxYear);
+        final EditText minPrice =findViewById(com.example.onstage.exercice3.R.id.editText_minPrice);
+        final EditText maxPrice =findViewById(com.example.onstage.exercice3.R.id.editText_MaxPrice);
 
         Bundle bundle = new Bundle();
         bundle.putInt(Constants.MIN_PRICE, Integer.parseInt(minPrice.getText().toString()));
